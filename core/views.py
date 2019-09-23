@@ -5,3 +5,17 @@ def index(Request):
         'title': 'Ecommerce'
     }
     return render(Request,'index.html',context)
+
+
+def contato(Request):
+    
+    return render(Request,'contato.html')
+
+
+def produto(Request):
+    
+    return render(Request,'produto.html')
+
+def lista_produtos(Request):
+    
+    return render(Request,'produtos_lista.html')

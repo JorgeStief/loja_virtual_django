@@ -17,8 +17,11 @@ Including another URLconf
 from django.urls import path
 from django.conf.urls import include
 from django.contrib import admin
-from core.views import index
+from core import views
 urlpatterns = [
-    path('',index),
+    path('',views.index, name='index'),
     path('admin/', admin.site.urls),
+    path('contato/', views.contato, name='contato'),
+    path('produtos/', views.lista_produtos,name='produtos'),
+    path('produto/', views.produto, name='produto'),
 ]

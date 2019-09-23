@@ -1,0 +1,128 @@
+{% load static %}
+<html lang="pt-br">
+
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link href="{% static 'assets/css/bootstrap.css' %} " rel="stylesheet">
+      <link href=" {% static 'assets/css/all.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/css/styles.css' %} " rel="stylesheet">
+      <link href="{% static 'assets/css/tema.css' %} " rel="stylesheet" type="text/css"/>
+      <link href="{% static 'assets/contatos/contatos.css' %}" rel="stylesheet">
+      <title>{% block title %}
+            E-Commerce
+      {% endblock title %}</title>
+   </head>
+
+   <body>
+      <!--INICIO CONTAINER GERAL-->
+      <div class="container-fluid">
+         <!-- INICIO DIV TOPO-->
+         <div class="row" id="topo">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-6">
+                     <img src="{% static 'assets/imagens/logo.png' %} " alt=""> 
+                              
+                  </div>
+                  
+                  <div class="col-md-6 text-right">
+                     <br>
+                     Olá: Jorge <a href="#" class="btn btn-info"><i class="fas fa-user"></i> Sair </a> 
+                  </div> 
+               </div>
+            </div>
+         </div>  
+
+         <div class="row bg-dark" id="barra-menu">
+            <div class="container-fluid">
+               <nav class="navbar navbar-inverse navbar-expand-lg navbar-dark bg-dark"> 
+
+                  <div class="container">
+                     
+                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+                        <span class="navbar-toggler-icon"></span>
+                     </button>
+                     
+                     <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+                        <ul class="navbar-nav mr-auto" >
+                           <li class="nav-item ">
+                              <a class="nav-link"  href="{% url 'index' %}"><i class="fab fas fa-home"></i> Home</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="{% url 'produtos' %}"><i class="fab fas fas fa-ticket-alt"></i> Produtos</a>
+                           </li>
+                           
+                           <li class="nav-item">
+                              <a class="nav-link " href="login.html"><i class="fab fas fas fa-user-circle"></i> Minha Conta</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link " href="carrinho.html"><i class=" fas fas fa-shopping-cart"></i> Carrinho</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link " href="{% url 'contato' %}"><i class=" fas fas fas fas fa-file-contract"></i> Contato</a>
+                           </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                           <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+                           <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class=" fas fas fa-search"></i> Pesquisar</button>
+                        </form>
+                     </div>
+                  </div> <!-- fim navbar collapse--> 
+               </nav><!-- fim da navBar-->
+            </div><!-- fim do container--> 
+         </div> <!-- fim barra menu--> 
+
+         <!-- Comeca DIV CONTEUDO-->
+         <br>
+         <div class="row" id="conteudo"> 
+            <div class="container">
+               <div class="row">
+
+                  <!-- coluna da esquerda -->
+                  <div class="col-md-2 " id="lateral">
+                     <div class="list-group">
+                        <span class="list-group-item active"> Categorias</span>
+                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Todos</a>                   <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Brinquedos</a> 
+                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Geral</a> 
+                        <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Camisas</a> 
+                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Calças</a> 
+                        <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Tênis</a> 
+                     </div><!--fim da list group-->              
+                  </div> <!-- finm coluna esquerda -->
+                  <div class="col-md-10" id="lateral-conteudo">
+                     
+                     <!-- =============== AQUI VAI TODO O CONTEUDO DO SITE OU DINAMICO  -->
+                     <!-- ============== INICIO DO CAROUSE ==================-->
+                     {% block conteudo %}
+                     {% endblock conteudo %}
+
+                     
+                  </div><!-- Fim Container Conteudo-->  
+               </div>
+            </div>
+         </div> <!-- Fim Container Geral-->  
+     
+     <br>
+     
+     
+     <div class="row" id="rodape"><!-- começa div rodape -->
+                 
+             <div class="container">
+                  <h4>TITULO_SITE</h4>
+                  <P>Todos os Direitos Reservados - Jorge Stief - Pirueba - Data Atual: 01/09/2019</P>
+              </div>
+         
+     
+     </div><!-- fim div rodape-->
+      
+
+      <script src="{% static 'assets/js/jquery-3.3.1.js' %} "></script>
+      <script src="{% static 'assets/js/popper.js' %}"></script>
+      <script src="{% static 'assets/js/bootstrap.js' %}"></script>
+      <script src="{% static 'assets/js/script.js' %}"></script>
+      <script src="{% static 'assets/contatos/contatos.js' %}"></script>
+     
+   </body>
+
+</html>

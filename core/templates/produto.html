@@ -1,0 +1,75 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Produto | | {{block.super}}
+{% endblock title %}
+
+{% block conteudo %}
+<h3 class="text-center">Calça Jeans </h3>
+                     <hr>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <img class="img-thumbnail "  src="{% static 'assets/imagens/calca.jpg' %}"></img>
+                              
+                        </div>
+                        
+                        <div class="col-md-6 ">
+                           <div class="img-thumbnail">
+                              
+                                 <img class="rounded mx-auto d-block" src="{% static 'assets/imagens/logo-pagseguro.png' %}"></img>
+                              
+                              <hr>
+                              <div class="row ">
+                                 <div class="col-md-5 ">
+                                    <h3 class="text-center preco">R$ 10,00</h3>   
+                                 </div>
+                                 <div class="col-md-7">
+                                    <form name="carrinho" method="post" action="carrinho.html">
+                                       <input type="hidden" name="pro_id" value="">
+                                       <input type="hidden" name="acao" value="add">
+                                       <button  class="btn btn-success btn-lg float-right mr-3 ">Comprar</button>
+                                    </form> 
+                                 </div>
+                              </div>
+                           </div>
+                           <br>
+                           <div class="row ">
+                                <div class="container">
+                                   <h4 class="text-center ">Descrição do produto</h4>
+
+                                   <p> abhbkjkjdjskjdskdkkdjkfd
+                                      fdjjkdsjkjkjkfbdkjbs
+                                      njsjkfdjfjbsfjsks
+                                   </p>
+                                </div>
+                           </div>
+
+                                 
+                        </div>
+                     </div>
+                     <hr>
+                     <div class="row">
+                           
+                        <div class="col-md-12 ">
+                                 
+                           <h4 class="text-center">Mais imagens</h4><br>
+                              
+                           <ul class="list-inline">
+                              <li class="col-md-3 list-inline-item">
+                                 <img src="{% static 'assets/imagens/calca.jpg' %}" width="200px" height="200px" alt="" class="img-thumbnail">
+                              </li>
+                              <li class="col-md-3 list-inline-item">
+                                 <img src="{% static 'assets/imagens/calca.jpg' %}" alt="" width="200px" height="200px" class="img-thumbnail">
+                              </li>
+                              <li class="col-md-3 list-inline-item">
+                                 <img src="{% static 'assets/imagens/calca.jpg' %}" alt="" width="200px" height="200px" class="img-thumbnail">
+                              </li>
+
+                           </ul>
+                              
+                        </div>
+                           
+                     </div>
+{% endblock conteudo %}
