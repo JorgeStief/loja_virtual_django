@@ -50,7 +50,7 @@
                               <a class="nav-link"  href="{% url 'index' %}"><i class="fab fas fa-home"></i> Home</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="{% url 'produtos' %}"><i class="fab fas fas fa-ticket-alt"></i> Produtos</a>
+                              <a class="nav-link" href="{% url 'catalogo:produto_lista' %}"><i class="fab fas fas fa-ticket-alt"></i> Produtos</a>
                            </li>
                            
                            <li class="nav-item">
@@ -83,11 +83,11 @@
                   <div class="col-md-2 " id="lateral">
                      <div class="list-group">
                         <span class="list-group-item active"> Categorias</span>
-                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Todos</a>                   <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Brinquedos</a> 
-                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Geral</a> 
-                        <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Camisas</a> 
-                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Calças</a> 
-                        <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Tênis</a> 
+                        {% for category  in categories  %}
+                           <a href="{% url 'catalogo:categoria' slug=category.slug %}" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> {{category.name}}</a> 
+                        {% endfor %}
+                                          
+                        
                      </div><!--fim da list group-->              
                   </div> <!-- finm coluna esquerda -->
                   <div class="col-md-10" id="lateral-conteudo">

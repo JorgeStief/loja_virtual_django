@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Listagem de Produtos | {{block.super}}
+{% endblock title %}
+
+{% block conteudo %}
+
+<h2 class="text-center">Meus Produtos</h2>
+                     <hr>
+                     <div class="row" id="pularliha">
+
+                        {% for product  in products  %}
+                        <div class="col-md-4">
+                           <div class="img-thumbnail ">
+                              <a href="{% url 'produto' %}">
+                                 <img  class="rounded mx-auto d-block" src="{% static 'assets/imagens/calca.jpg' %}" width="200" height="200"  alt=""> 
+                                 
+                                 <div class="caption">
+                                    <h4 class="text-center ">{{product.name}}</h4>
+                                    <h3 class="text-center text-danger"><i class="fas fa-tag"></i> R${{product.price}}</h3>
+                                    
+                                 </div><!-- fim da div caption -->    
+                              </a>
+                           </div>
+                        </div> <!-- fim da <li> col-md-4 -->
+                        {% endfor %}
+
+                        
+
+                       
+                     </div>
+                     <nav aria-label="Navegação de página" class="pt-3"  >
+                        <ul class="pagination justify-content-center">
+                           <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+                              <li class="page-item active "><a class="page-link" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link" href="produtos2.html">2</a></li>
+                               <li class="page-item"><a class="page-link" href="produtos2.html">Próximo</a></li>
+                        </ul>
+                     </nav>
+                  </div>
+{% endblock conteudo %}
