@@ -47,20 +47,16 @@
                      <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
                         <ul class="navbar-nav mr-auto" >
                            <li class="nav-item ">
-                              <a class="nav-link"  href="{% url 'index' %}"><i class="fab fas fa-home"></i> Home</a>
+                              <a class="nav-link"  href="{% url 'catalogo:produto_lista' %}"><i class="fab fas fa-home"></i> Home</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="{% url 'catalogo:produto_lista' %}"><i class="fab fas fas fa-ticket-alt"></i> Produtos</a>
-                           </li>
-                           
-                           <li class="nav-item">
-                              <a class="nav-link " href="login.html"><i class="fab fas fas fa-user-circle"></i> Minha Conta</a>
+                              <a class="nav-link " href="#"><i class="fab fas fas fa-user-circle"></i> Minha Conta</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link " href="carrinho.html"><i class=" fas fas fa-shopping-cart"></i> Carrinho</a>
+                              <a class="nav-link " href="#"><i class=" fas fas fa-shopping-cart"></i> Carrinho</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link " href="{% url 'contato' %}"><i class=" fas fas fas fas fa-file-contract"></i> Contato</a>
+                              <a class="nav-link " href="#"><i class=" fas fas fas fas fa-file-contract"></i> Contato</a>
                            </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
@@ -82,10 +78,13 @@
                   <!-- coluna da esquerda -->
                   <div class="col-md-2 " id="lateral">
                      <div class="list-group">
-                        <span class="list-group-item active"> Categorias</span>
-                        {% for category  in categories  %}
-                           <a href="{% url 'catalogo:categoria' slug=category.slug %}" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> {{category.name}}</a> 
+                        <span class="list-group-item active" style="background-color:#204d74">Categorias</span>
+                       <a href="{% url 'catalogo:produto_lista' %}"><span class="list-group-item {% if not categoria %}active{% endif %}"><i class="fas fa-angle-right"></i> Todos</span></a>
+                        {% for cat  in categorias %}
+                           <a href="{{ cat.get_absolute_path }}" class="list-group-item {% if cat == categoria%}active{% endif %}"><i class="fas fa-angle-right"></i> {{cat.name}}</a> 
                         {% endfor %}
+
+                        
                                           
                         
                      </div><!--fim da list group-->              

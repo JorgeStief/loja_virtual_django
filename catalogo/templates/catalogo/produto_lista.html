@@ -6,20 +6,48 @@
 {% endblock title %}
 
 {% block conteudo %}
-
-<h2 class="text-center">Meus Produtos</h2>
+{% if not categoria %}
+ <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+         <div class="carousel-item active">
+            <img class="d-block w-100" src="{% static 'assets/imagens/banner.jpg' %}" alt="Primeiro Slide">
+         </div>
+         <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'assets/imagens/banner.jpg' %}" alt="Segundo Slide">
+         </div>
+         <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'assets/imagens/banner.jpg' %}" alt="Terceiro Slide">
+         </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+         <span class="sr-only">Anterior</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+         <span class="carousel-control-next-icon" aria-hidden="true"></span>
+         <span class="sr-only">Próximo</span>
+      </a>
+   </div>
+   {% endif %}
+   <br>
+<h2 class="text-center">{% if not categoria %} Produtos {% else %} {{categoria}}{% endif %}</h2>
                      <hr>
                      <div class="row" id="pularliha">
 
-                        {% for product  in products  %}
+                        {% for produto  in produtos  %}
                         <div class="col-md-4">
                            <div class="img-thumbnail ">
-                              <a href="{% url 'produto' %}">
+                              <a href="{{ produto.get_absolute_path }}">
                                  <img  class="rounded mx-auto d-block" src="{% static 'assets/imagens/calca.jpg' %}" width="200" height="200"  alt=""> 
                                  
                                  <div class="caption">
-                                    <h4 class="text-center ">{{product.name}}</h4>
-                                    <h3 class="text-center text-danger"><i class="fas fa-tag"></i> R${{product.price}}</h3>
+                                    <h4 class="text-center ">{{produto.name}}</h4>
+                                    <h3 class="text-center text-danger"><i class="fas fa-tag"></i> R${{produto.price}}</h3>
                                     
                                  </div><!-- fim da div caption -->    
                               </a>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -13,6 +14,8 @@ class Categoria(models.Model):
         verbose_name_plural = 'Categorias'
         ordering = ['name']
         
+    def get_absolute_path(self):
+        return reverse('catalogo:produto_lista_por_categoria', args=[self.slug])
     def __str__(self):
         return self.name 
 
@@ -31,5 +34,19 @@ class Produto(models.Model):
         verbose_name_plural = 'Produtos'
         ordering = ['name']
         
+    def get_absolute_path(self):
+        return reverse('catalogo:produto_exibe', args=[self.id, self.slug])
+        
     def __str__(self):
-        return self.name     
+        return self.name    
+    
+class Imagem(models.Model):
+    slug = models.SlugField('Identificador', max_length=300)
+    product = models.ForeignKey('Produto', verbose_name='Produto',on_delete=models.CASCADE)
+    
+
+    class Meta():
+        verbose_name = 'Imagem'
+        verbose_name_plural = 'Imagens'
+        ordering = ['product']
+            
