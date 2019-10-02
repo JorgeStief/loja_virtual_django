@@ -22,6 +22,6 @@ urlpatterns = [
     #path('',views.index, name='index'),
     path('admin/', admin.site.urls),
     #path('contato/', views.contato, name='contato'),
-    path('', include('catalogo.urls')),
+    path('', include('catalogo.urls',namespace='catalogo')),
     #path('produto/', views.produto, name='produto'),
 ]

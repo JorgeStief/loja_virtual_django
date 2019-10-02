@@ -59,12 +59,24 @@
 
                        
                      </div>
+
+                        
                      <nav aria-label="Navegação de página" class="pt-3"  >
                         <ul class="pagination justify-content-center">
-                           <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-                              <li class="page-item active "><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="produtos2.html">2</a></li>
-                               <li class="page-item"><a class="page-link" href="produtos2.html">Próximo</a></li>
+                           {% if produtos.has_previous %}
+                              <li class="page-item"><a class="page-link" href="page={{ produtos.previous_page_number }}">Anterior</a></li>
+                           {% endif %}
+                           
+                           
+                           {% for x in produtos.paginator.page_range %}
+                                 <li class="page-item {% if x == produtos.number %}active{% endif %}"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                              {% endfor %}
+                              
+                         
+                              
+                           {% if produtos.has_next %}
+                              <li class="page-item"><a class="page-link" href="page={{ produtos.next_page_number }}">Próximo</a></li>
+                           {% endif %}    
                         </ul>
                      </nav>
                   </div>
