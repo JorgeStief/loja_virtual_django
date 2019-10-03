@@ -13,7 +13,7 @@
                      <hr>
                      <div class="row">
                         <div class="col-md-6"> 
-                           <img class="img-thumbnail "  src="{% static 'assets/imagens/' %}{% if imagem == '' %}produto.jpg {% else %}{{imagem}}{% endif %}"></img>
+                           <img class="img-thumbnail "  src="{% static 'assets/imagens/' %}{% if produto.main_image == '' %}produto.jpg {% else %}{{produto.main_image}}{% endif %}"></img>
                               
                         </div>
                         
@@ -59,7 +59,7 @@
                            <ul class="list-inline">
                               {% for img in imagens  %}
                               <li class="col-md-3 list-inline-item">
-                                 <img src="{% static 'assets/imagens/'%}{{img}}" width="200px" height="200px" alt="" class="img-thumbnail">
+                                 <img src="{% static 'assets/imagens/'%}{{img.slug}}" width="200px" height="200px" alt="" class="img-thumbnail">
                               </li>
                              {% endfor %}
                            </ul>

@@ -8,11 +8,18 @@ def produto_lista(request, slug_da_categoria=None):
     categorias = Categoria.objects.all()
     prod = Produto.objects.all()
     
+    
     if slug_da_categoria:
         categoria = get_object_or_404(Categoria, slug=slug_da_categoria)
         prod = prod.filter(category=categoria).order_by("name")
 
-    paginator = Paginator(prod, 1)
+        
+        
+    
+    
+   
+
+    paginator = Paginator(prod, ITEMS_PER_PAGE)
     page = request.GET.get('page')
     produtos = paginator.get_page(page)
 
@@ -20,6 +27,7 @@ def produto_lista(request, slug_da_categoria=None):
         'categorias': categorias,
         'produtos': produtos,
         'categoria': categoria,
+        
         }
     
     return render (request, 'catalogo/produto_lista.html',context)
@@ -30,18 +38,9 @@ def produto_exibe(request, id ,slug_do_produto):
     produto = get_object_or_404(Produto, id=id)
     categoria = get_object_or_404(Categoria, id=produto.category_id)
     categorias = Categoria.objects.all().order_by('name')
-    imagens =  Imagem.objects.all().filter(product=produto).order_by('id')
+    imagens =  Imagem.objects.filter(product=produto).order_by('id')
     
-    aux=[]
-    aux1 = ''
-    i=0
-    if imagens != '':
-        for imagem in imagens:
-            if i==0:
-                aux1= imagem.slug
-            else:
-                aux.append(imagem.slug) 
-            i = i+1    
+  
         
         
       
@@ -50,7 +49,6 @@ def produto_exibe(request, id ,slug_do_produto):
         'produto': produto,
         'categorias': categorias,
         'categoria': categoria,
-        'imagens': aux,
-        'imagem': aux1
+        'imagens': imagens,
     }
     return render(request, 'catalogo/produto_exibe.html', context)

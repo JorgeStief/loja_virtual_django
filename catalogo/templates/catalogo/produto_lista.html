@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Listagem de Produtos | {{block.super}}
+   {% if categoria %}{{categoria}}{% else %}Produtos{% endif %} | {{block.super}}
 {% endblock title %}
 
 {% block conteudo %}
@@ -13,6 +13,8 @@
          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
+     
+      
       <div class="carousel-inner">
          <div class="carousel-item active">
             <img class="d-block w-100" src="{% static 'assets/imagens/banner.jpg' %}" alt="Primeiro Slide">
@@ -43,7 +45,7 @@
                         <div class="col-md-4">
                            <div class="img-thumbnail ">
                               <a href="{{ produto.get_absolute_path }}">
-                                 <img  class="rounded mx-auto d-block" src="{% static 'assets/imagens/calca.jpg' %}" width="200" height="200"  alt=""> 
+                                 <img  class="rounded mx-auto d-block" src="{% static 'assets/imagens/' %}{% if produto.main_image == '' %}produto.jpg {% else %}{{produto.main_image}}{% endif %}" width="200" height="200"  alt=""> 
                                  
                                  <div class="caption">
                                     <h4 class="text-center ">{{produto.name}}</h4>
@@ -60,24 +62,25 @@
                        
                      </div>
 
-                        
-                     <nav aria-label="Navegação de página" class="pt-3"  >
-                        <ul class="pagination justify-content-center">
-                           {% if produtos.has_previous %}
-                              <li class="page-item"><a class="page-link" href="page={{ produtos.previous_page_number }}">Anterior</a></li>
-                           {% endif %}
-                           
-                           
-                           {% for x in produtos.paginator.page_range %}
-                                 <li class="page-item {% if x == produtos.number %}active{% endif %}"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
-                              {% endfor %}
+                     {% if produtos %}
+                        <nav aria-label="Navegação de página" class="pt-3"  >
+                           <ul class="pagination justify-content-center">
+                              {% if produtos.has_previous %}
+                                 <li class="page-item"><a class="page-link" href="?page={{ produtos.previous_page_number }}">Anterior</a></li>
+                              {% endif %}
                               
-                         
                               
-                           {% if produtos.has_next %}
-                              <li class="page-item"><a class="page-link" href="page={{ produtos.next_page_number }}">Próximo</a></li>
-                           {% endif %}    
-                        </ul>
-                     </nav>
+                              {% for x in produtos.paginator.page_range %}
+                                    <li class="page-item {% if x == produtos.number %}active{% endif %}"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                                 {% endfor %}
+                                 
+                           
+                                 
+                              {% if produtos.has_next %}
+                                 <li class="page-item"><a class="page-link" href="?page={{ produtos.next_page_number }}">Próximo</a></li>
+                              {% endif %}    
+                           </ul>
+                        </nav>
+                     {% endif %}
                   </div>
 {% endblock conteudo %}

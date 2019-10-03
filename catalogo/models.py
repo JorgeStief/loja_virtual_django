@@ -4,8 +4,8 @@ from django.urls import reverse
 # Create your models here.
 
 class Categoria(models.Model):
-    name = models.CharField('Nome',max_length=100)
-    slug = models.SlugField('Identificador',max_length=100)
+    name = models.CharField('Nome',max_length=100, default=None)
+    slug = models.SlugField('Identificador',max_length=100, default=None)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField("Modificado em",auto_now_add=True)
 
@@ -21,11 +21,12 @@ class Categoria(models.Model):
 
 
 class Produto(models.Model):
-    name = models.CharField('Nome', max_length=100)
-    slug = models.SlugField('Identificador', max_length=100)
+    name = models.CharField('Nome', max_length=100,default=None)
+    slug = models.SlugField('Identificador', max_length=100, default=None)
     category = models.ForeignKey('Categoria', verbose_name='Categoria',on_delete=models.CASCADE)
     description = models.TextField('Descrição', blank=True)
-    price = models.DecimalField('Preço', decimal_places=2, max_digits=8)
+    price = models.DecimalField('Preço', decimal_places=2, max_digits=8, default=None)
+    main_image = models.CharField('Imagem Principal', max_length=200, default=None)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField("Modificado em", auto_now_add=True)
 
@@ -41,7 +42,7 @@ class Produto(models.Model):
         return self.name    
     
 class Imagem(models.Model):
-    slug = models.SlugField('Identificador', max_length=300)
+    slug = models.SlugField('Identificador', max_length=300, default=None)
     product = models.ForeignKey('Produto', verbose_name='Produto',on_delete=models.CASCADE)
     
 
