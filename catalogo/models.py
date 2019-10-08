@@ -36,7 +36,7 @@ class Produto(models.Model):
         ordering = ['name']
         
     def get_absolute_path(self):
-        return reverse('catalogo:produto_exibe', args=[self.id, self.slug])
+        return reverse('catalogo:produto_exibe', args=[self.category.slug, self.id, self.slug])
         
     def __str__(self):
         return self.name    

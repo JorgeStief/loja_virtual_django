@@ -13,12 +13,6 @@ def produto_lista(request, slug_da_categoria=None):
         categoria = get_object_or_404(Categoria, slug=slug_da_categoria)
         prod = prod.filter(category=categoria).order_by("name")
 
-        
-        
-    
-    
-   
-
     paginator = Paginator(prod, ITEMS_PER_PAGE)
     page = request.GET.get('page')
     produtos = paginator.get_page(page)
@@ -33,7 +27,7 @@ def produto_lista(request, slug_da_categoria=None):
     return render (request, 'catalogo/produto_lista.html',context)
 
 
-def produto_exibe(request, id ,slug_do_produto):
+def produto_exibe(request, slug_da_categoria, id ,slug_do_produto):
     
     produto = get_object_or_404(Produto, id=id)
     categoria = get_object_or_404(Categoria, id=produto.category_id)
