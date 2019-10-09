@@ -1,0 +1,248 @@
+!DOCTYPE html>
+<html lang="pt-br">
+
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link href="assets/css/bootstrap.css" rel="stylesheet">
+      <link href="assets/css/all.css" rel="stylesheet">
+      <link href="assets/css/styles.css" rel="stylesheet">
+      <link href="assets/css/tema.css" rel="stylesheet" type="text/css"/>
+      <title>Bootstrap</title>
+
+      <script>
+            $(document).ready(function(){    
+            
+               // validar frete
+                 $('#buscar_frete').click(function(){  
+                    
+                  var CEP_CLIENTE = $('#cep_frete').val();
+                  var PESO_FRETE = $('#peso_frete').val();
+                   
+                    if (CEP_CLIENTE.length !== 8 ) {
+                    alert('Digite seu CEP corretamente, 8 dígitos e sem traço ou ponto');  
+                     $('#frete').addClass(' text-center text-danger');
+                     $('#frete').html('<b>Digite seu CEP corretamente, 8 dígitos e sem traço ou ponto</b>');
+                    $('#cep_frete').focus();
+                    } else {
+                 
+                   
+                    $('#frete').html('<img src="view/images/loader.gif"> <b>Carregando...</b>');
+                    $('#frete').addClass(' text-center text-danger');
+                  
+                    // carrego o combo com os bairros
+                   
+                    $('#frete').load('controller/frete.php?cepcliente='+CEP_CLIENTE+'&pesofrete='+PESO_FRETE);
+             
+             } // fim do IF digitei o CEP
+                  
+             
+                }); // fim do change
+                
+               
+            } ); // fim do ready
+            
+    </script>
+
+
+   </head>
+
+   <body>
+      <!--INICIO CONTAINER GERAL-->
+      <div class="container-fluid">
+         <!-- INICIO DIV TOPO-->
+         <div class="row" id="topo">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-6">
+                     <img src="assets/imagens/logo.png" alt=""> 
+                              
+                  </div>
+                  
+                  <div class="col-md-6 text-right">
+                     <br>
+                     Olá: Jorge <a href="#" class="btn btn-info"><i class="fas fa-user"></i> Sair </a> 
+                  </div> 
+               </div>
+            </div>
+         </div>  
+
+         <div class="row bg-dark" id="barra-menu">
+            <div class="container-fluid">
+               <nav class="navbar navbar-inverse navbar-expand-lg navbar-dark bg-dark"> 
+
+                  <div class="container">
+                     
+                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+                        <span class="navbar-toggler-icon"></span>
+                     </button>
+                     
+                     <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+                        <ul class="navbar-nav mr-auto" >
+                           <li class="nav-item ">
+                              <a class="nav-link"  href="index.html"><i class="fab fas fa-home"></i> Home</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="produtos.html"><i class="fab fas fas fa-ticket-alt"></i> Produtos</a>
+                           </li>
+                           
+                           <li class="nav-item">
+                              <a class="nav-link " href="login.html"><i class="fab fas fas fa-user-circle"></i> Minha Conta</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link " href="carrinho.html"><i class=" fas fas fa-shopping-cart"></i> Carrinho</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link " href="contato.html"><i class=" fas fas fas fas fa-file-contract"></i> Contato</a>
+                           </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                           <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+                           <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class=" fas fas fa-search"></i> Pesquisar</button>
+                        </form>
+                     </div>
+                  </div> <!-- fim navbar collapse--> 
+               </nav><!-- fim da navBar-->
+            </div><!-- fim do container--> 
+         </div> <!-- fim barra menu--> 
+
+         <!-- Comeca DIV CONTEUDO-->
+         <br>
+         <div class="row" id="conteudo"> 
+            <div class="container">
+               <div class="row">
+
+                  <!-- coluna da esquerda -->
+                  <div class="col-md-2 " id="lateral">
+                     <div class="list-group">
+                        <span class="list-group-item active"> Categorias</span>
+                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Todos</a>                   <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Brinquedos</a> 
+                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Geral</a> 
+                        <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Camisas</a> 
+                        <a href="#" class="list-group-item"><span class="glyphicon glyphicon-menu-right"></span> Calças</a> 
+                        <a href="#" class="list-group-item"><i class="glyphicon glyphicon-menu-right"></i> Tênis</a> 
+                     </div><!--fim da list group-->              
+                  </div> <!-- finm coluna esquerda -->
+                <div class="col-md-10" id="lateral-conteudo">
+                     
+                    <!-- =============== AQUI VAI TODO O CONTEUDO DO SITE OU DINAMICO  -->
+                    
+                            
+                    <h3 class="text-center">Meu Carrinho</h3>
+                            
+                    <!-- botoes e opções de cima -->
+                    <div class="row float-right">
+                        <div class="col-md-12  ">
+                            <a href="" class="btn btn-info" title="">Comprar Mais</a>
+                        </div>
+                       
+                    </div>
+                    <br>
+                    <br>
+                    <!--  table listagem de itens -->
+                    <div class="row ">
+                        <table class="table table-bordered ml-4" style="width: 95%">
+                           <tr class="text-white " style="background-color: #204d74">
+                                <td></td> 
+                                <td>Produto</td> 
+                                <td>Valor R$</td> 
+                                <td>X</td> 
+                                <td>Sub Total R$</td> 
+                                <td></td> 
+                                        
+                            </tr>
+                            <tr>
+                                        
+                                <td> <img src="assets/imagens/calca02.jpg" width="80px" height="80px" alt="calça"> </td>
+                                <td>  Calça Jeans </td>
+                                <td>  10,00</td>
+                                <td> 1  </td>
+                                <td>  10,00 </td>
+                                <td> 
+                                    <form name="" method="post" action="">
+                                        <input type="hidden" name="pro_id" value="#">    
+                                        <input type="hidden" name="acao" value="del">    
+                                                
+                                        <button class="btn btn-danger btn-sm"> Excluir </button>
+                                    </form>
+                                </td>
+                                        
+                                        
+                            </tr>
+                        </table>           
+                    </div><!-- fim da listagem itens -->
+                    <!--  bloco frete -->
+                    <div class="row" id="dadosfrete">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                        <!-- campos para tratar  do  frete -->
+                            <input type="hidden" name="peso_frete" id="peso_frete" value="{$PESO}" class="form-control " readonly>
+                            <input type="text" name="cep_frete" class="form-control" id="cep_frete" value="" placeholder="digite seu cep" >
+                            <input type="hidden" name="frete_valor" id="frete_valor" value="0">
+                        </div> 
+                        <div class="col-md-4">
+                            <!-- botão frete -->
+                            <button class="btn btn-outline-warning btn-block" id="buscar_frete"> <i class="glyphicon glyphicon-send"></i> Calcular Frete </button>
+                        </div>  
+                    </div><br><hr>
+
+                    <!-- botoes de baixo e valor total -->
+                    <div class="row " id="total" >
+                        <div class="col-md-4 text-right"></div>
+                        <div class="col-md-4 text-right text-danger ">
+                            <h4>Total : R$ 10,00</h4>
+                        </div>
+                        <!-- botão de limpar-->
+                        <div class="col-md-4 ">
+                            <form name="limpar" method="post" action="">
+                                <input type="hidden" name="acao" value="limpar">
+                                <input type="hidden" name="pro_id" value="1">
+                                <button class="btn btn-danger btn-block"> <i class="glyphicon glyphicon-trash"></i> Limpar Tudo</button>
+                                <br>
+                            </form>
+                            <form name="pedido_confirmar" id="pedido_confirmar" method="post" action="{$PAG_CONFIRMAR}">
+                                <span id="frete"></span>
+                                <button class="btn btn-success btn-block" type="submit">  <i class="glyphicon glyphicon-ok"></i> Confirmar Pedido </button>
+                            </form>
+                        </div>
+                                <!-- botão finalzar -->
+                    </div>
+                    <br><hr>
+                </div><!-- Fim Conteudo Central-->  
+               
+            
+
+            <!-- começa div rodape -->
+            <br>
+            </div>
+        </div>
+            
+        </div> <!-- Fim Conatiner Geral-->  
+        
+
+        <div class="row" id="rodape">
+                    
+                <div class="container">
+                    <h4>TITULO_SITE</h4>
+                    <P>Todos os Direitos Reservados - Jorge Stief - Pirueba - Data Atual: 01/09/2019</P>
+                </div>
+            
+        
+        </div><!-- fim div rodape-->
+            
+            
+            
+          
+      
+
+      <script src="assets/js/jquery-3.3.1.js"></script>
+      <script src="assets/js/all.min.js"></script>
+      <script src="assets/js/popper.js"></script>
+      <script src="assets/js/bootstrap.js"></script>
+      <script src="assets/js/script.js"></script>
+   </body>
+
+   
+
+
+</html>

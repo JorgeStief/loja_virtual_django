@@ -17,14 +17,14 @@ Including another URLconf
 from django.urls import path
 from django.conf.urls import include
 from django.contrib import admin
-
+from django.contrib.auth.views import LoginView
 
 
 urlpatterns = [
     #path('',views.index, name='index'),
     path('admin/', admin.site.urls),
     path('contato/', include('core.urls',namespace='contato')),
-    #path('contato/', views.contato, name='contato'),
+    path('entrar/', LoginView.as_view(), {'template_name':'login.html'} ,name='login'),
     path('', include('catalogo.urls',namespace='catalogo')),
     #path('produto/', views.produto, name='produto'),
 ]
