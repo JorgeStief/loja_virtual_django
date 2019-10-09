@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    #libs
+    'widget_tweaks',
+    #apps
     'core',
     'catalogo'
 ]
@@ -129,4 +131,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
+EMAIL_HOST = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = 'admin@djangoecommerce.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

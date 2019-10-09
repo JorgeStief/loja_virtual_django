@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% load static %}
+{% load widget_tweaks %}
 
 {% block title %}
 Contato | {{block.super}}
@@ -10,18 +12,26 @@ Contato | {{block.super}}
     <div class="row">
 
         <div class="col-md-12 ">
-
-            <form class="form-horizontal ml-5" id="frmcontatoazul" action="envio">
+            {% if success  %}
+                <div class="alert alert-success">Mensagem Enviada com Sucesso</div>
+            {% else %}
+                    
+            {% endif %}
+            <form class="form-horizontal ml-5" id="frmcontatoazul" action="" method="POST">
                 <fieldset>
 
-                   
+                    
                     <legend>Contato</legend>
+                    {% csrf_token %}
                     {% for field in form %}
 
-                        <div class="form-group">
+                        <div class="form-group {% if field.errors %} has-error {% endif %}">
                             <label class="col-md-4 control-label" for="{{ field.auto_id }}">{{ field.label }}</label>
                             <div class="col-md-8">
-                                {{ field }}
+                                {% render_field field class='form-control'%}
+                                {% for error in field.errors %}
+                                    <span class="help-block"></span>
+                                {% endfor %}
                             </div>
                         </div>
 
