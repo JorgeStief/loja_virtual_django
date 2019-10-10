@@ -2,6 +2,7 @@
 
 {% load static %}
 
+{% load widget_tweaks %}
 {% block title %}
 Entrar | {{block.super}}
 {% endblock  %}
@@ -16,17 +17,31 @@ Entrar | {{block.super}}
                                    
                                 </div>
                                 <div class="col-md-4">
-                                    <form role="form">
+                                    <form role="form" method="POST">
+                                    {% csrf_token %}
+                                        {% for error in form.non_field_errors %}
+                                            <div class="alert alert-danger"> 
+                                                {{ error }}
+                                            </div>
+                                        {% endfor %}
                                         <fieldset>
-                                    
-                                            <div class="form-group ls-login-user">
-                                                <label for="userLogin" >Usuário</label>
-                                                <input class="form-control ls-login-bg-user input-lg" id="userLogin" type="text" aria-label="Usuário" placeholder="Usuário">
+                                           
+                                            <div class="form-group ls-login-user {% if form.username.errors %} has-error {% endif%}">
+                                                <label for="{{form.username.auto_id}}" >{{form.username.label}}</label>
+                                                {% render_field form.username class="form-control" %}
+                                                {% for error in form.username.errors %}
+                                                    <div class="alert alert-danger"> 
+                                                        {{ error }}
+                                                    </div>
+                                                {% endfor %}
                                             </div>
                                     
-                                            <div class="form-group ls-login-password">
-                                                <label for="userPassword">Senha</label>
-                                                <input class="form-control ls-login-bg-password input-lg" id="userPassword" type="password" aria-label="Senha" placeholder="Senha">
+                                            <div class="form-group ls-login-password {% if form.password.errors %} has-error {% endif%}">
+                                                <label for="{{form.password.auto_id}}">{{form.password.label}}</label>
+                                                {% render_field form.password class="form-control" %}
+                                                {% for error in form.password.errors %}
+                                                    <li class='errorlist'><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
                                             </div>
                                     
                                             <a href="#" class="ls-login-forgot">Esqueci minha senha</a>

@@ -4,10 +4,14 @@ from catalogo.models import Categoria
 from .forms import ContatoForm
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.generic import View, TemplateView
 
-def index(Request):
-    return render(Request, 'index.html')
+class IndexView(TemplateView):
 
+    template_name = 'produto_lista.html'
+
+
+index = IndexView.as_view()
 
 def contato(Request):
     categorias = Categoria.objects.all()
