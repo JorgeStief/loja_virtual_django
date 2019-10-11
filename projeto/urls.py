@@ -17,14 +17,16 @@ Including another URLconf
 from django.urls import path
 from django.conf.urls import include
 from django.contrib import admin
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
+from catalogo.models import Categoria
 
-
+categorias = Categoria.objects.all()
 urlpatterns = [
     #path('',views.index, name='index'),
     path('admin/', admin.site.urls),
     path('contato/', include('core.urls',namespace='contato')),
-    path('entrar/', LoginView.as_view(), {'template_name':'login.html'} ,name='login'),
+    path('entrar/', LoginView.as_view(extra_context={'categorias': categorias}) ,name='login'),
+    path('sair/', LogoutView.as_view(next_page='/'),name='logout'),
     path('', include('catalogo.urls',namespace='catalogo')),
-    #path('produto/', views.produto, name='produto'),
+    
 ]

@@ -131,8 +131,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL= 'login'
-LOGIN_REDIRECT_URL = 'produto_lista'
+LOGIN_URL= ''
+LOGIN_REDIRECT_URL = '/'
 LOGOUT = ''
 
 EMAIL_HOST = ''
