@@ -25,8 +25,9 @@ urlpatterns = [
     #path('',views.index, name='index'),
     path('admin/', admin.site.urls),
     path('contato/', include('core.urls',namespace='contato')),
-    path('entrar/', LoginView.as_view(extra_context={'categorias': categorias}) ,name='login'),
-    path('sair/', LogoutView.as_view(next_page='/'),name='logout'),
+    #path('entrar/', LoginView.as_view(extra_context={'categorias': categorias}) ,name='login'),
+    #path('sair/', LogoutView.as_view(next_page='/'),name='logout'),
     path('', include('catalogo.urls',namespace='catalogo')),
+    path('autenticacao/', include('autenticacao.urls',namespace='autenticacao')),
     
 ]

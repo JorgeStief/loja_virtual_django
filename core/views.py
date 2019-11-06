@@ -5,7 +5,7 @@ from .forms import ContatoForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views.generic import View, TemplateView
-
+from django.contrib.auth.decorators import login_required
 class IndexView(TemplateView):
 
     template_name = 'produto_lista.html'
@@ -13,6 +13,7 @@ class IndexView(TemplateView):
 
 index = IndexView.as_view()
 
+# @login_required
 def contato(Request):
     categorias = Categoria.objects.all()
     success= False

@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     #apps
     'core',
-    'catalogo'
+    'catalogo',
+    'autenticacao',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+    #'autenticacao.middleware.LoginRequiredMiddleware',
     
 ]
 
@@ -128,12 +129,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL= ''
+LOGIN_URL= '/autenticacao/login/'
 LOGIN_REDIRECT_URL = '/'
-LOGOUT = ''
+LOGOUT_REDIRECT_URL = '/'
+
 
 EMAIL_HOST = ''
 EMAIL_HOST_USER = ''
