@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from catalogo.models import Categoria, Produto
 from django.conf import settings
@@ -30,5 +30,9 @@ def produto_lista(request, slug_da_categoria=None):
         'categoria': categoria,
         
         }
+    if request.user.is_superuser:   
+        return render (request, 'Dashboard/index.html',context)
+    else:
+
+        return redirect ('/')  
     
-    return render (request, 'Dashboard/index.html',context)

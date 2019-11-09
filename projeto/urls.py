@@ -22,6 +22,7 @@ from catalogo.models import Categoria
 
 urlpatterns = [
     #path('',views.index, name='index'),
+    path('admin2/', admin.site.urls),
     path('admin/', include('Dashboard.urls',namespace='dashboard')),
     path('', include('core.urls',namespace='contato')),
     path('', include('core.urls',namespace='minhaconta')),
