@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'core',
     'catalogo',
     'autenticacao',
+    'Dashboard',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +75,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 #apps
-                'catalogo.context_processors.Categorias'
+                'catalogo.context_processors.Categorias',
+                'catalogo.context_processors.Data'
             ],
         },
     },

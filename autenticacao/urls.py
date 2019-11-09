@@ -7,7 +7,7 @@ categorias = Categoria.objects.all()
 app_name = 'autenticacao'
  
 urlpatterns = [
-   path('login/', auth_views.LoginView.as_view(extra_context={'categorias': categorias},authentication_form=AuthenticationFormCustomizado), 
+   path('login/', auth_views.LoginView.as_view(authentication_form=AuthenticationFormCustomizado), 
                                                name='login'),
    path('logout/', auth_views.LogoutView.as_view(), name='logout')                                               
 ]

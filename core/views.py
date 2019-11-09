@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.views.generic import View, TemplateView
 from django.contrib.auth.decorators import login_required
+
 class IndexView(TemplateView):
 
     template_name = 'produto_lista.html'
@@ -15,7 +16,7 @@ index = IndexView.as_view()
 
 # @login_required
 def contato(Request):
-    categorias = Categoria.objects.all()
+    
     success= False
     form = ContatoForm(Request.POST or None)
     if form.is_valid():
@@ -23,13 +24,26 @@ def contato(Request):
         success= True
     context = {
         'form': form,
-        'categorias': categorias,
         'success': success
     }
     return render(Request,'contato.html',context)
 
+@login_required
+def minhaconta(Request):
+    
+    context = {
+        "teste": "teste"
+    }
+    return render(Request,'minhaconta.html',context)
 
-def produto(Request):
-    return render(Request,'produto.html')
+@login_required
+def carrinho(Request):
+    
+    context = {
+        "teste": "teste"
+    }
+    return render(Request,'carrinho.html',context)
+
+
 
 
