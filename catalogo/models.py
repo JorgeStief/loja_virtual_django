@@ -1,11 +1,11 @@
 from django.db import models
 from django.urls import reverse
-
+from django.utils.text import slugify
 # Create your models here.
 
 class Categoria(models.Model):
     name = models.CharField('Nome',max_length=100, default=None)
-    slug = models.SlugField('Identificador',max_length=100, default=None)
+    slug = models.SlugField('Identificador',max_length=100, default=None,unique=True)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField("Modificado em",auto_now_add=True)
 
@@ -19,6 +19,20 @@ class Categoria(models.Model):
     def __str__(self):
         return self.name 
 
+    def _get_unique_slug(self):
+        slug = slugify(self.name)
+        unique_slug = slug
+        num = 1
+        while Categoria.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+ 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)    
+
 
 class Produto(models.Model):
     name = models.CharField('Nome', max_length=100,default=None)
@@ -26,7 +40,7 @@ class Produto(models.Model):
     category = models.ForeignKey('Categoria', verbose_name='Categoria',on_delete=models.CASCADE)
     description = models.TextField('Descrição', blank=True)
     price = models.DecimalField('Preço', decimal_places=2, max_digits=8, default=None)
-    main_image = models.CharField('Imagem Principal', max_length=200, default=None)
+    main_image = models.CharField('Imagem Principal', max_length=200, null=True, blank='true', default=None)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField("Modificado em", auto_now_add=True)
 
@@ -39,7 +53,21 @@ class Produto(models.Model):
         return reverse('catalogo:produto_exibe', args=[self.category.slug, self.id, self.slug])
         
     def __str__(self):
-        return self.name    
+        return self.name 
+
+    def _get_unique_slug(self):
+        slug = slugify(self.name)
+        unique_slug = slug
+        num = 1
+        while Produto.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+ 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)           
     
 class Imagem(models.Model):
     slug = models.SlugField('Identificador', max_length=300, default=None)
