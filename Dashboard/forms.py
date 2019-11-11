@@ -13,7 +13,7 @@ class ProdutoForm(forms.ModelForm):
         model = Produto
         fields = ('id', 'category', 'name', 'price', 'description')
 
-    produto_id = forms.CharField(widget=forms.HiddenInput(), required=False)
+    id = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     # <input type="hidden" name="produto_id" id="id_produto_id" value="xxx">
 
@@ -73,6 +73,8 @@ class ProdutoForm(forms.ModelForm):
     #        required=''
     #        id='id_data_cadastro'
     #        maxlength='10'>
+
+    
 
     def clean_preco(self):
         preco = self.cleaned_data.get('price')

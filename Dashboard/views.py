@@ -57,7 +57,7 @@ def cadastra_produto(request):
                 produto.user = request.user
                 messages.add_message(request, messages.INFO, 'Produto cadastrado com sucesso!')
             produto.save()
-            return redirect('Dashboard:exibe_produto', id=produto.id)
+            return redirect('Dashboard:lista_produto')
         else:
             messages.add_message(request, messages.ERROR, 'Corrija o(s) erro(s) abaixo.')
     else:
@@ -85,7 +85,7 @@ def edita_produto(request, id):
     produto_form.fields['id'].initial = id
 
     
-    return render(request, 'produto/cadastra_produto.html', {
+    return render(request, 'Dashboard/cadastra_produto.html', {
        'form': produto_form,
        
     })

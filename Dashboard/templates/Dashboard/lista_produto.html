@@ -3,107 +3,159 @@
 {% load static %}
 
 {% block titulo %}
-    Cadastro de Produtos 
+Cadastro de Produtos
 {% endblock %}
 
 {% block conteudo %}
-    
 
 
-                 
-                        <div class="white-box">
 
-                            <h3 class="box-title" align="center" >Listagem de Produtos</h3>
-                            {% if messages %}
-        <div class="row mb-3">
-            <div class="col-12">
-                {% for message in messages %}
-                    <ul class="list-group rounded {{ message.tags }}">
-                        {# Supondo a utilização de apenas info e danger #}
-                        <li style="padding-top: 7px; padding-bottom: 7px;"
-                            class="list-group-item list-group-item-{% if message.tags == 'info' %}info{% else %}danger{% endif %}">
-                            {{ message }}
-                        </li>
-                    </ul>
-                {% endfor %}
-            </div>
-        </div>
-    {% endif %}
-                            <div class="table-responsive">
-                           <table class="table table-bordered">
-                                 <thead class="thead-dark">
-                                    <tr>
-                                       <th>Categoria</th>
-                                       <th>Nome</th>
-                                       <th>Preço</th>
-                                       <th>Descrição</th>
-                                       <th  >Ação</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    {% for produto in produtos  %}
-                                    <tr>
-                                        
-                                        
-                                        
-                                       <td width="15%">{{ produto.category.name }}</td>
-                                       <td width="15%">{{ produto.name }}</td>
-                                       <td width="10%">{{ produto.price }}</td>
-                                       <td width="25%">{{ produto.description }}</td>
-                                       <td class="row">
-                                        <div class="col-md-3" >
-                                          <a id="botao_editar" href="{% url 'Dashboard:edita_produto' produto.id %}" class="btn btn-primary">
-                                             Editar
-                                          </a>
-                                        </div>
-                                        <div style="background-color:red"></div>
-                                        <div  class="col-md-3" > 
-                                          <form id="form_remove_produto" style="margin-bottom: 0px;" action="{% url 'Dashboard:lista_produto' %}" method="post" novalidate>
-                                               {% csrf_token %}
-                                                    <input type="hidden" name="id" value="{{ produto.id }}">
-                                                    <button id="botao_remover" type="submit" class="btn btn-danger">
-                                                         Excluir
-                                                    </button>
-                                                </form>
-                                             
-                                          
-                                        </div>
-                                        <div class="col-md-6"></div>
-                                        </td>
-                                        
-                                    </tr>
-                                     {% endfor %}   
-                                 </tbody>
-                           </table>
-                           </div>
-                           {% if produtos %}
-                        <nav aria-label="Navegação de página" class="pt-3"  >
-                           <ul class="pagination justify-content-center">
-                              {% if produtos.has_previous %}
-                                 <li class="page-item"><a class="page-link" href="?page={{ produtos.previous_page_number }}">Anterior</a></li>
-                              {% endif %}
-                              
-                              
-                              {% for x in produtos.paginator.page_range %}
-                                    <li class="page-item {% if x == produtos.number %}active{% endif %}"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
-                                 {% endfor %}
-                                 
-                           
-                                 
-                              {% if produtos.has_next %}
-                                 <li class="page-item"><a class="page-link" href="?page={{ produtos.next_page_number }}">Próximo</a></li>
-                              {% endif %}    
-                           </ul>
-                            </nav>
-                        {% endif %}
-                  
-                        </div>
+
+<div class="white-box">
+
+   <div>
+      <h3 class="box-title" align="center">Listagem de Produtos</h3>
+   </div>
+   <div class="row">
+      <div class="col-md-4">
+         <a class="btn btn-success" href="{% url 'Dashboard:cadastra_produto' %}" align="right">Cadastrar</a>
+      </div>
+   </div>
+   <br>
+   {% if messages %}
+   <div class="row mb-3">
+      <div class="col-12">
+         {% for message in messages %}
+         <ul class="list-group rounded {{ message.tags }}">
+            {# Supondo a utilização de apenas info e danger #}
+            <li style="padding-top: 7px; padding-bottom: 7px;"
+               class="list-group-item list-group-item-{% if message.tags == 'info' %}info{% else %}danger{% endif %}">
+               {{ message }}
+            </li>
+         </ul>
+         {% endfor %}
+      </div>
+   </div>
+   {% endif %}
+   <div class="table-responsive">
+      <table class="table table-bordered">
+         <thead class="thead-dark">
+            <tr>
+               <th>Categoria</th>
+               <th>Nome</th>
+               <th>Preço</th>
+               <th>Descrição</th>
+               <th>Ação</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for produto in produtos  %}
+            <tr>
+               <td width="15%">{{ produto.category.name }}</td>
+               <td width="15%">{{ produto.name }}</td>
+               <td width="10%">{{ produto.price }}</td>
+               <td width="25%">{{ produto.description }}</td>
+               <td class="row">
+                  <div class="col-md-3">
+                     <a id="botao_editar" href="{% url 'Dashboard:edita_produto' produto.id %}" class="btn btn-primary">
+                        Editar
+                     </a>
+                  </div>
+                  <div style="background-color:red"></div>
+                  <div class="col-md-3">
+                     <!--<form id="form_remove_produto" style="margin-bottom: 0px;"
+                        action="{% url 'Dashboard:lista_produto' %}" method="post" novalidate>
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ produto.id }}"> -->
+                        <button id="botao_remover"  class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                           Excluir
+                        </button>
+                     <!--</form>-->
+
+
+                  </div>
+                  <div class="col-md-6"></div>
+               </td>
+
+            </tr>
+            {% block modal %}
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                     </button>
                      </div>
-                
-               
+                     <div class="modal-body">
+                     Deseja Realmente excluir esse Produto?
+                     </div>
+                     <div class="modal-footer">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                           </div>
+                           <div class="col-md-6">   
+                              <form id="form_remove_produto"  action="{% url 'Dashboard:lista_produto' %}" method="post" novalidate>
+                                          {% csrf_token %}
+                                          <input type="hidden" name="id" value="{{ produto.id }}"> 
+                                          <button id="botao_remover"  class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">
+                                             Excluir
+                                          </button>
+                              </form>
+                           </div>     
+                        </div>   
+                     
+                     </div>
+                  </div>
+               </div>
+               </div>
+
+               {% endblock %}
+
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+   {% if produtos %}
+   <nav aria-label="Navegação de página" class="pt-3">
+      <ul class="pagination justify-content-center">
+         {% if produtos.has_previous %}
+         <li class="page-item"><a class="page-link" href="?page={{ produtos.previous_page_number }}">Anterior</a></li>
+         {% endif %}
+
+
+         {% for x in produtos.paginator.page_range %}
+         <li class="page-item {% if x == produtos.number %}active{% endif %}"><a class="page-link"
+               href="?page={{x}}">{{x}}</a></li>
+         {% endfor %}
+
+
+
+         {% if produtos.has_next %}
+         <li class="page-item"><a class="page-link" href="?page={{ produtos.next_page_number }}">Próximo</a></li>
+         {% endif %}
+      </ul>
+   </nav>
+   {% endif %}
+
+</div>
+</div>
+
+
 {% endblock %}
 
 
 
 
-
+   
+{% block scripts %}
+   <script>
+      $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+      })
+   
+   
+   </script>
+{% endblock  %}

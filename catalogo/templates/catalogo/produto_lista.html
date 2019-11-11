@@ -45,7 +45,7 @@
                         <div class="col-md-4">
                            <div class="img-thumbnail ">
                               <a href="{{ produto.get_absolute_path }}">
-                                 <img  class="rounded mx-auto d-block" src="{% static 'assets/imagens/' %}{% if produto.main_image == '' %}produto.jpg {% else %}{{produto.main_image}}{% endif %}" width="200" height="200"  alt=""> 
+                                 <img  class="rounded mx-auto d-block" src="{% static '/' %}{% if produto.main_image == '' %}produto.jpg {% else %}{{produto.main_image}}{% endif %}" width="200" height="200"  alt=""> 
                                  
                                  <div class="caption">
                                     <h4 class="text-center ">{{produto.name}}</h4>
