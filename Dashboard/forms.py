@@ -89,6 +89,7 @@ class ProdutoForm(forms.ModelForm):
 
 class RemoveProdutoForm(forms.Form):
     class Meta:
+        model = Produto
         fields = ('id')
 
     id = forms.CharField(widget=forms.HiddenInput(), required=True)

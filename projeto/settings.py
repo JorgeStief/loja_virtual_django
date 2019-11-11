@@ -139,6 +139,8 @@ LOGIN_URL= '/autenticacao/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+MEDIA_URL = 'core/static/media/'
+MEDIA_ROOT = 'core/static/'
 
 EMAIL_HOST = ''
 EMAIL_HOST_USER = ''

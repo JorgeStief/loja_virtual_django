@@ -41,9 +41,7 @@ def index(request, slug_da_categoria=None):
 
 @login_required
 def cadastra_produto(request):
-    print("entrou1")
     if request.POST:
-        print("entrou")
         produto_id = request.POST.get('id')
         if produto_id:
             produto = get_object_or_404(Produto, pk=produto_id)
@@ -75,7 +73,7 @@ def cadastra_produto(request):
 
 def exibe_produto(request, id):
     produto = get_object_or_404(Produto, pk=id)
-    form_remove_produto = RemoveProdutoForm(initial={'produto_id': id})
+    form_remove_produto = RemoveProdutoForm(initial={'id': id})
     return render(request, 'Dashboard/exibe_produto.html', {
        'produto': produto,
        'form_remove_produto': form_remove_produto
@@ -92,3 +90,44 @@ def edita_produto(request, id):
        
     })
 
+def lista_produto(request):
+    if request.POST:  
+        produto_id = request.POST.get('id')
+        produto = get_object_or_404(Produto, id=produto_id)
+        
+        produto.delete()
+        messages.add_message(request, messages.INFO, 'Produto removido com sucesso.')
+        
+    
+    lista_de_produtos = Produto.objects.all()
+
+    paginator = Paginator(lista_de_produtos, 5)
+    pagina = request.GET.get('page')
+    produtos = paginator.get_page(pagina)
+    
+    return render(request, 'Dashboard/lista_produto.html', {
+        'produtos': produtos,
+        
+    })
+
+def remove_produto(request):
+#   form_remove_produto = RemoveProdutoForm(request.POST)
+#   if form_remove_produto.is_valid:
+      # produto_id = form_remove_produto.cleaned_data['produto_id']
+    if request.POST:  
+        produto_id = request.POST.get('id')
+        produto = get_object_or_404(Produto, id=produto_id)
+        
+        produto.delete()
+        messages.add_message(request, messages.INFO, 'Produto removido com sucesso.')
+        produtos = Produto.objects.all()
+
+    return render(request, 'Dashboard/lista_produto.html', {
+        'produtos': produtos,
+        
+    })
+#   else:
+#      raise ValueError('Ocorreu um erro inesperado ao tentar remover um produto.')
+
+
+      
