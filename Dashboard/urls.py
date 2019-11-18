@@ -4,7 +4,7 @@ from Dashboard import views
 app_name='Dashboard'
 
 urlpatterns = [
-    path('', views.index, name="Dashboard"),
+    path('', views.index, name="index"),
     path('cadastra_produto/', views.cadastra_produto, name='cadastra_produto'),
     path('exibe_produto/<int:id>/', views.exibe_produto, name='exibe_produto'),
     path('edita_produto/<int:id>/', views.edita_produto, name='edita_produto'),

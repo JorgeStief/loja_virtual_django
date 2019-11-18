@@ -13,7 +13,7 @@
                      <hr>
                      <div class="row">
                         <div class="col-md-6"> 
-                           <img class="img-thumbnail "  src="{% static 'assets/imagens/' %}{% if produto.main_image == '' %}produto.jpg {% else %}{{produto.main_image}}{% endif %}"></img>
+                           <img class="img-thumbnail "  src="{% if produto.main_image == '' %}{% static 'assets/imagens/produto.jpg' %} {% else %} {% static '' %}{{ produto.main_image }} {% endif %}"></img>
                               
                         </div>
                         

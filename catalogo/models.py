@@ -40,7 +40,7 @@ class Produto(models.Model):
     category = models.ForeignKey('Categoria', verbose_name='Categoria',on_delete=models.CASCADE)
     description = models.TextField('Descrição', blank=True)
     price = models.DecimalField('Preço', decimal_places=2, max_digits=8, default=None)
-    main_image = models.FileField('Imagem Principal', upload_to="media/%Y-%m-%d/", default=None)
+    main_image = models.FileField('Imagem Principal', upload_to="images/", default=None)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField("Modificado em", auto_now_add=True)
 

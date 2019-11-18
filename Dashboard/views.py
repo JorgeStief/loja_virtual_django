@@ -43,11 +43,15 @@ def index(request, slug_da_categoria=None):
 def cadastra_produto(request):
     if request.POST:
         produto_id = request.POST.get('id')
+        
         if produto_id:
             produto = get_object_or_404(Produto, pk=produto_id)
             produto_form = ProdutoForm(request.POST, instance=produto)
+            print(request.POST.get('main_image'))
+            
         else:
             produto_form = ProdutoForm(request.POST)
+            
 
         if produto_form.is_valid():
             produto = produto_form.save(commit=False)

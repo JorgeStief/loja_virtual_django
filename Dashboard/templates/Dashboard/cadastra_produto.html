@@ -31,7 +31,7 @@
     {% endif %}
 
 
-    <form id="form" action ="{% url 'Dashboard:cadastra_produto' %}" method ="POST" novalidate>
+    <form id="form" action ="{% url 'dashboard:cadastra_produto' %}" method ="POST" novalidate>
 
         <div class="form-group row" style="margin-bottom: 10px;">
             <label for="id_categoria" class="col-lg-2 col-form-label font-weight-bold">Categoria</label>
@@ -130,11 +130,11 @@
               Imagem                                             
            </label>                                                     
            <div class='col-lg-3'>                                       
-              {{ form.image }}                                     
-              {% if form.image.errors %}                           
+              {{ form.main_image }}                                     
+              {% if form.main_image.errors %}                           
                  <div class='alert alert-danger mb-0'                   
                       style='padding-top: 2px; padding-bottom: 2px;'>   
-                    {% for error in form.image.errors %}           
+                    {% for error in form.main_image.errors %}           
                        <small>{{ error }}</small>                       
                     {% endfor %}                                        
                  </div>                                                 
@@ -155,6 +155,13 @@
                 </button>
             </div>
         </div>
+        {% if form.id.value %}
+            <div class="form-group row" style="margin-top: 20px;">
+
+                <input type="hidden" name="id" value="{{ form.id.value }} ">
+            </div>
+        {% endif %}
+
     </form>
 
 {% endblock %}

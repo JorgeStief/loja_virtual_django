@@ -11,7 +11,7 @@ class ProdutoForm(forms.ModelForm):
 
     class Meta:
         model = Produto
-        fields = ('id', 'category', 'name', 'price', 'description')
+        fields = ('id', 'category', 'name', 'price', 'description','main_image')
 
     id = forms.CharField(widget=forms.HiddenInput(), required=False)
 
@@ -74,17 +74,23 @@ class ProdutoForm(forms.ModelForm):
     #        id='id_data_cadastro'
     #        maxlength='10'>
 
+
+    main_image = forms.ImageField  (
+        error_messages={'required': 'Campo obrigatório.', },
+        widget=forms.ClearableFileInput(),
+        required=False
+    )
     
 
-    def clean_preco(self):
-        preco = self.cleaned_data.get('price')
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
         
-        if not preco:
-            return preco
+        if not price:
+            return price
         
-        preco = Decimal(preco.replace(',', '.'))
+        price = Decimal(price.replace(',', '.'))
 
-        return preco
+        return price
         
     
         
