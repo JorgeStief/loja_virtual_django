@@ -139,8 +139,8 @@ LOGIN_URL= '/autenticacao/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-MEDIA_URL = '../core/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '../core/static')
+MEDIA_URL = 'core/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'core/static')
 
 
 

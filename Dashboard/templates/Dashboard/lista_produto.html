@@ -10,16 +10,45 @@ Cadastro de Produtos
 
 
 
-
+<div>
+   <h3 class="box-title" align="center">Listagem de Produtos</h3>
+</div>
 <div class="white-box">
 
-   <div>
-      <h3 class="box-title" align="center">Listagem de Produtos</h3>
-   </div>
+   
    <div class="row">
       <div class="col-md-4">
          <a class="btn btn-success" href="{% url 'Dashboard:cadastra_produto' %}" align="right">Cadastrar</a>
       </div>
+      <div class="col-md-2">
+        
+      </div>
+      <div class="col-md-6">
+         <form action="{% url 'Dashboard:lista_produto' %}" method='GET'>
+            <div class='form-group row' style='margin-bottom: 10px;'>
+               <label for='id_busca_por' class='col-md-2 col-form-label font-weight-bold'>
+                  Nome
+               </label>
+               <div class='col-md-5'>
+                  {{ form.busca_por }}
+               </div>
+               <div class="col-md-5 ">
+                  <button type='submit' class='btn btn-primary'>
+                     <i class="fa fa-search"></i> 
+                     Pesquisar
+                  </button>
+               </div>
+
+
+            </div>
+
+
+            
+               
+            
+         </form>
+      </div>
+
    </div>
    <br>
    {% if messages %}
@@ -67,9 +96,9 @@ Cadastro de Produtos
                         action="{% url 'Dashboard:lista_produto' %}" method="post" novalidate>
                         {% csrf_token %}
                         <input type="hidden" name="id" value="{{ produto.id }}"> -->
-                        <button id="botao_remover"  class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-                           Excluir
-                        </button>
+                     <button id="botao_remover" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                        Excluir
+                     </button>
                      <!--</form>-->
 
 
@@ -79,40 +108,44 @@ Cadastro de Produtos
 
             </tr>
             {% block modal %}
-                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
                <div class="modal-dialog" role="document">
                   <div class="modal-content">
                      <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                     </button>
+                        <h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
                      </div>
                      <div class="modal-body">
-                     Deseja Realmente excluir esse Produto?
+                        Deseja Realmente excluir esse Produto?
                      </div>
                      <div class="modal-footer">
                         <div class="row">
                            <div class="col-md-6">
-                              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-secondary btn-block"
+                                 data-dismiss="modal">Close</button>
                            </div>
-                           <div class="col-md-6">   
-                              <form id="form_remove_produto"  action="{% url 'Dashboard:lista_produto' %}" method="post" novalidate>
-                                          {% csrf_token %}
-                                          <input type="hidden" name="id" value="{{ produto.id }}"> 
-                                          <button id="botao_remover"  class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">
-                                             Excluir
-                                          </button>
+                           <div class="col-md-6">
+                              <form id="form_remove_produto" action="{% url 'Dashboard:lista_produto' %}" method="post"
+                                 novalidate>
+                                 {% csrf_token %}
+                                 <input type="hidden" name="id" value="{{ produto.id }}">
+                                 <button id="botao_remover" class="btn btn-danger btn-block" data-toggle="modal"
+                                    data-target="#exampleModal">
+                                    Excluir
+                                 </button>
                               </form>
-                           </div>     
-                        </div>   
-                     
+                           </div>
+                        </div>
+
                      </div>
                   </div>
                </div>
-               </div>
+            </div>
 
-               {% endblock %}
+            {% endblock %}
 
             {% endfor %}
          </tbody>
@@ -149,13 +182,13 @@ Cadastro de Produtos
 
 
 
-   
+
 {% block scripts %}
-   <script>
-      $('#myModal').on('shown.bs.modal', function () {
+<script>
+   $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
-      })
-   
-   
-   </script>
+   })
+
+
+</script>
 {% endblock  %}

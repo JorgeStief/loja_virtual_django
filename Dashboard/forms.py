@@ -6,6 +6,19 @@ from projeto import settings
 from datetime import datetime, timedelta
 
 
+class PesquisaProdutoForm(forms.Form):
+   class Meta:
+      fields = ('busca_por')
+
+   busca_por = forms.CharField(
+      widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'maxlength': '120'}),
+      required=False)
+   
+   # <input type='text'
+   #        name='busca_por'
+   #        id='id_busca_por'
+   #        class='form-control form-control-sm'
+   #        maxlength='120'>
 
 class ProdutoForm(forms.ModelForm):
 

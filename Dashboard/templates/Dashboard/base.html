@@ -70,11 +70,7 @@
                         <a class="nav-toggler open-close waves-effect waves-light hidden-md hidden-lg"
                             href="javascript:void(0)"><i class="fa fa-bars"></i></a>
                     </li>
-                    <li>
-                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i
-                                    class="fa fa-search"></i></a> </form>
-                    </li>
+                    
                    
                 </ul>
             </div>
@@ -94,7 +90,7 @@
                 </div>
                 <ul class="nav" id="side-menu">
                     <li style="padding: 70px 0 0;">
-                        <a href="{% url 'Dashboard:lista_produto' %}" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href="{% url 'Dashboard:home' %}" class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i>Home</a>
                     </li>
                     <li>
@@ -122,7 +118,7 @@
                                 aria-hidden="true"></i>Configurações</a>
                     </li>
                     <li>
-                        <a href="profile.html" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="{% url 'catalogo:produto_lista' %}" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i>Sair</a>
                     </li>
                     
@@ -138,13 +134,7 @@
         <!-- ============================================================== -->
         <div id="page-wrapper">
             <div class="container-fluid">
-                <div class="row bg-title">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Blank Page</h4>
-                    </div>
-                    
-                    <!-- /.col-lg-12 -->
-                </div>
+               
                 <div class="row">
                     <div class="col-md-12">
                          {% block conteudo %}

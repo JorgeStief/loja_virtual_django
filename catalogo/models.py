@@ -70,7 +70,7 @@ class Produto(models.Model):
         super().save(*args, **kwargs)           
     
 class Imagem(models.Model):
-    slug = models.SlugField('Identificador', max_length=300, default=None)
+    slug = models.FileField('Identificador', upload_to="images/", default=None)
     product = models.ForeignKey('Produto', verbose_name='Produto',on_delete=models.CASCADE)
     
 

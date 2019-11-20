@@ -4,13 +4,13 @@
 {% load widget_tweaks %}
 
 {% block title %}
-Login | {{block.super}}
+Registro| {{block.super}}
 {% endblock title %}
 
 {% block conteudo %}
  <div class="box-parent-login">
                         <div class="well bg-white box-login">
-                            <h1 class="text-center">Login</h1>
+                            <h1 class="text-center">Registrar</h1>
                             <hr>
                             <div class="row">
                                 <div class="col-md-4">
@@ -36,20 +36,25 @@ Login | {{block.super}}
                                                 {% endfor %}
                                             </div>
                                     
-                                            <div class="form-group ls-login-password {% if form.password.errors %} has-error {% endif%}">
-                                                <label for="{{form.password.auto_id}}">{{form.password.label}}</label>
-                                                {% render_field form.password class="form-control" %}
-                                                {% for error in form.password.errors %}
+                                            <div class="form-group ls-login-password {% if form.password1.errors %} has-error {% endif%}">
+                                                <label for="{{form.password1.auto_id}}">{{form.password1.label}}</label>
+                                                {% render_field form.password1 class="form-control" %}
+                                                {% for error in form.password1.errors %}
+                                                    <li class='errorlist'><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="form-group ls-login-password {% if form.password2.errors %} has-error {% endif%}">
+                                                <label for="{{form.password2.auto_id}}">{{form.password2.label}}</label>
+                                                {% render_field form.password2 class="form-control" %}
+                                                {% for error in form.password2.errors %}
                                                     <li class='errorlist'><strong>{{ error|escape }}</strong></li>
                                                 {% endfor %}
                                             </div>
                                     
-                                            <a href="#" class="ls-login-forgot">Esqueci minha senha</a>
+                                           
                                     
-                                            <input type="submit" value="Entrar" class="btn btn-primary btn-lg btn-block">
-                                            <p class="txt-center ls-login-signup">Não possui Cadastro?
-                                                <a href="{% url 'autenticacao:register' %}">Cadastre-se agora</a>
-                                            </p>
+                                            <input type="submit" value="Cadastrar" class="btn btn-primary btn-lg btn-block">
+                                            
                                     
                                         </fieldset>
                                     </form>

@@ -1,6 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import PasswordInput
+from django.contrib.auth import (
+    authenticate, get_user_model, password_validation,
+)
+from django.contrib.auth.models import User
 
 class AuthenticationFormCustomizado(AuthenticationForm):
 
@@ -32,3 +36,7 @@ class AuthenticationFormCustomizado(AuthenticationForm):
    #        maxlength='25'
    #        required>
 
+
+
+  
+    

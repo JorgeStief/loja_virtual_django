@@ -3,35 +3,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
 
-from Dashboard.forms import ProdutoForm, RemoveProdutoForm
+from Dashboard.forms import ProdutoForm, RemoveProdutoForm, PesquisaProdutoForm
 from catalogo.models import Produto, Categoria
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @login_required
-def index(request, slug_da_categoria=None):
-    categoria = None
-    categorias = Categoria.objects.all()
-    prod = Produto.objects.all()
+def home(request):
     
-    
-    if slug_da_categoria:
-        categoria = get_object_or_404(Categoria, slug=slug_da_categoria)
-        prod = prod.filter(category=categoria).order_by("name")
-
-    paginator = Paginator(prod, 5)
-    page = request.GET.get('page')
-    produtos = paginator.get_page(page)
-
-    context = {
-        'categorias': categorias,
-        'produtos': produtos,
-        'categoria': categoria,
-        
-        }
     if request.user.is_superuser:   
-        return render (request, 'Dashboard/index.html',context)
+        return render (request, 'Dashboard/home.html')
     else:
 
         return redirect ('/')  
@@ -95,6 +77,8 @@ def edita_produto(request, id):
     })
 
 def lista_produto(request):
+    form = PesquisaProdutoForm(request.GET)
+    
     if request.POST:  
         produto_id = request.POST.get('id')
         produto = get_object_or_404(Produto, id=produto_id)
@@ -102,8 +86,12 @@ def lista_produto(request):
         produto.delete()
         messages.add_message(request, messages.INFO, 'Produto removido com sucesso.')
         
-    
-    lista_de_produtos = Produto.objects.all()
+    if form:
+        if form.is_valid():
+            busca_por = form.cleaned_data['busca_por']
+            lista_de_produtos = Produto.objects.filter(name__icontains=busca_por).order_by('name')
+    else:    
+        lista_de_produtos = Produto.objects.all()
 
     paginator = Paginator(lista_de_produtos, 5)
     pagina = request.GET.get('page')
@@ -111,6 +99,8 @@ def lista_produto(request):
     
     return render(request, 'Dashboard/lista_produto.html', {
         'produtos': produtos,
+        'form': form,
+        'busca': busca_por
         
     })
 
