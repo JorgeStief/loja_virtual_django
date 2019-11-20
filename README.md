@@ -1,4 +1,4 @@
-# EasyExam
+# Django Loja Virtual
 
 
 # Preparing enviroment
