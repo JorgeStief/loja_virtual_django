@@ -44,6 +44,18 @@ def carrinho(Request):
     }
     return render(Request,'carrinho.html',context)
 
+@login_required
+class CarrinhoView(View):
+
+    def post(self, request):
+        return render(request,'carrinho.html',context)
 
 
+
+    def get(self, request):
+        print(request.user)
+        context = {
+        "teste": "teste"
+        }
+        return render(request,'carrinho.html',context)
 

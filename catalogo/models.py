@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.conf import settings
 # Create your models here.
 
 class Categoria(models.Model):
@@ -78,4 +79,19 @@ class Imagem(models.Model):
         verbose_name = 'Imagem'
         verbose_name_plural = 'Imagens'
         ordering = ['product']
+
+class Carrinho(models.Model):
+    id_product = models.ForeignKey('Produto', verbose_name='Produto',on_delete=models.DO_NOTHING)
+    id_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name='produtos',
+                             on_delete=models.DO_NOTHING,
+                             null=True)
+    price = models.DecimalField('Preço', decimal_places=2, max_digits=8, default=None)                         
+    amount = models.IntegerField('Quantidade',default=1)
+    created = models.DateTimeField('Criado em', auto_now_add=True)
+
+    class Meta():
+        verbose_name = 'Carrinho'
+        verbose_name_plural = 'Carrinho'
+        ordering = ['id_user']                         
             
