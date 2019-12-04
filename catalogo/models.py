@@ -81,7 +81,7 @@ class Imagem(models.Model):
         ordering = ['product']
 
 class Carrinho(models.Model):
-<<<<<<< HEAD
+
     produto = models.ForeignKey('Produto', verbose_name='Produto',on_delete=models.DO_NOTHING)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name='produtos',

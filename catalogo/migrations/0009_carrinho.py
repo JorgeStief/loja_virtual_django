@@ -21,29 +21,17 @@ class Migration(migrations.Migration):
             name='Carrinho',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-<<<<<<< HEAD
                 ('quantidade', models.SlugField(default=None, max_length=100, unique=True, verbose_name='Quantidade')),
                 ('preco', models.DecimalField(decimal_places=2, default=None, max_digits=8, verbose_name='Preço')),
                 ('total', models.DecimalField(decimal_places=2, default=None, max_digits=8, verbose_name='Total')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Criado em')),
                 ('modified', models.DateTimeField(auto_now_add=True, verbose_name='Modificado em')),
                 ('produto', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='catalogo.Produto', verbose_name='Produto')),
-=======
-                ('price', models.DecimalField(decimal_places=2, default=None, max_digits=8, verbose_name='Preço')),
-                ('amount', models.IntegerField(default=1, verbose_name='Quantidade')),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='Criado em')),
-                ('id_product', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='catalogo.Produto', verbose_name='Produto')),
-                ('id_user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='produtos', to=settings.AUTH_USER_MODEL)),
->>>>>>> 5d68238ece4f6aa5a45fe1f6188fbcaaa24de48d
             ],
             options={
                 'verbose_name': 'Carrinho',
                 'verbose_name_plural': 'Carrinho',
-<<<<<<< HEAD
                 'ordering': ['id'],
-=======
-                'ordering': ['id_user'],
->>>>>>> 5d68238ece4f6aa5a45fe1f6188fbcaaa24de48d
             },
         ),
     ]
