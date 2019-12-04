@@ -81,6 +81,7 @@ class Imagem(models.Model):
         ordering = ['product']
 
 class Carrinho(models.Model):
+<<<<<<< HEAD
     produto = models.ForeignKey('Produto', verbose_name='Produto',on_delete=models.DO_NOTHING)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name='produtos',
@@ -92,12 +93,14 @@ class Carrinho(models.Model):
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField("Modificado em",auto_now_add=True)
 
+
     class Meta():
         verbose_name = 'Carrinho'
         verbose_name_plural = 'Carrinho'
+
         ordering = ['id']
         
     def get_absolute_path(self):
         return reverse('catalogo:produto_lista_por_categoria', args=[self.slug])
-          
+
             
