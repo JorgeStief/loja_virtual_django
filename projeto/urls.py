@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', include('Dashboard.urls',namespace='dashboard')),
     path('', include('core.urls',namespace='contato')),
     path('', include('core.urls',namespace='minhaconta')),
-    path('', include('core.urls',namespace='carrinho')),
+    
     #path('entrar/', LoginView.as_view(extra_context={'categorias': categorias}) ,name='login'),
     #path('sair/', LogoutView.as_view(next_page='/'),name='logout'),
     path('', include('catalogo.urls',namespace='catalogo')),

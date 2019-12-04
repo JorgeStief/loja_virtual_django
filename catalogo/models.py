@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.conf import settings
 # Create your models here.
 
 class Categoria(models.Model):
@@ -78,4 +79,25 @@ class Imagem(models.Model):
         verbose_name = 'Imagem'
         verbose_name_plural = 'Imagens'
         ordering = ['product']
+
+class Carrinho(models.Model):
+    produto = models.ForeignKey('Produto', verbose_name='Produto',on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name='produtos',
+                             on_delete=models.DO_NOTHING,
+                             null=True)
+    quantidade = models.SlugField('Quantidade',max_length=100, default=None,unique=True)
+    preco = models.DecimalField('Preço', decimal_places=2, max_digits=8, default=None)
+    total = models.DecimalField('Total', decimal_places=2, max_digits=8, default=None)
+    created = models.DateTimeField('Criado em', auto_now_add=True)
+    modified = models.DateTimeField("Modificado em",auto_now_add=True)
+
+    class Meta():
+        verbose_name = 'Carrinho'
+        verbose_name_plural = 'Carrinho'
+        ordering = ['id']
+        
+    def get_absolute_path(self):
+        return reverse('catalogo:produto_lista_por_categoria', args=[self.slug])
+          
             

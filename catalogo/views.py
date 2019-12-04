@@ -1,6 +1,11 @@
-from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
-from .models import Produto, Categoria,Imagem
+from .models import Produto, Categoria,Imagem, Carrinho
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
+from datetime import datetime, timedelta
+from django.db.models import Sum, F, FloatField
+from django.contrib.auth.decorators import login_required
 ITEMS_PER_PAGE = 5
 
 def produto_lista(request, slug_da_categoria=None):
@@ -46,3 +51,10 @@ def produto_exibe(request, slug_da_categoria, id ,slug_do_produto):
         'imagens': imagens,
     }
     return render(request, 'catalogo/produto_exibe.html', context)
+
+
+
+
+
+
+

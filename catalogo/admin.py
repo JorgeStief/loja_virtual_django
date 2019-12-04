@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Produto, Categoria, Imagem
+from .models import Produto, Categoria, Imagem, Carrinho
 # Register your models here.
 
 
@@ -18,7 +18,15 @@ class ImagemAdmin(admin.ModelAdmin):
     list_display = [ 'slug','product']
     #search_fields = ['name','slug','category__name']
     #list_filter = ['created', 'modified']
+
+
+class CarrinhoAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'produto','preco','quantidade', 'total','created','modified']
+    search_fields = ['id']
+    list_filter = ['created', 'modified']
         
 admin.site.register(Categoria,CategoriaAdmin)
 admin.site.register(Produto,ProdutoAdmin)
 admin.site.register(Imagem,ImagemAdmin)
+admin.site.register(Carrinho,CarrinhoAdmin)
+

@@ -7,8 +7,9 @@ from Dashboard.forms import ProdutoForm, RemoveProdutoForm, PesquisaProdutoForm
 from catalogo.models import Produto, Categoria
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
 
-# Create your views here.
+
 @login_required
 def home(request):
     
@@ -23,19 +24,25 @@ def home(request):
 
 @login_required
 def cadastra_produto(request):
+    
     if request.POST:
-        produto_id = request.POST.get('id')
         
+        produto_id = request.POST.get('id')
+        print(request.POST.get('main_image'))
         if produto_id:
+            
             produto = get_object_or_404(Produto, pk=produto_id)
             produto_form = ProdutoForm(request.POST, instance=produto)
-            print(request.POST.get('main_image'))
+            
             
         else:
-            produto_form = ProdutoForm(request.POST)
-            
+            teste = request.FILES['jorge']
+            print(teste)
+            produto_form = ProdutoForm(request.POST, request.FILES)
+            handle_uploaded_file(request.FILES['jorge'])
 
         if produto_form.is_valid():
+            
             produto = produto_form.save(commit=False)
             if produto_id:
                 messages.add_message(request, messages.INFO, 'Produto alterado com sucesso!')

@@ -31,13 +31,14 @@ Contato | {{block.super}}
                                 <td></td> 
                                         
                             </tr>
+                            {% for carrinho, form_atualiza_produto in listas %}
                             <tr>
                                         
                                 <td> <img src="assets/imagens/calca02.jpg" width="80px" height="80px" alt="calça"> </td>
-                                <td>  Calça Jeans </td>
-                                <td>  10,00</td>
-                                <td> 1  </td>
-                                <td>  10,00 </td>
+                                <td> {{carrinho.id__name}}</td>
+                                <td>  {{carrinho.preco}}</td>
+                                <td> {{carrinho.quantidade}} </td>
+                                <td>  {{carrinho.total}}</td>
                                 <td> 
                                     <form name="" method="post" action="">
                                         <input type="hidden" name="pro_id" value="#">    
@@ -49,6 +50,7 @@ Contato | {{block.super}}
                                         
                                         
                             </tr>
+                            {% endfor %}
                         </table>           
                     </div><!-- fim da listagem itens -->
                     <!--  bloco frete -->
