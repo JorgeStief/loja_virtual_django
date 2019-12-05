@@ -87,9 +87,8 @@ class Carrinho(models.Model):
                              related_name='produtos',
                              on_delete=models.DO_NOTHING,
                              null=True)
-    quantidade = models.SlugField('Quantidade',max_length=100, default=None,unique=True)
+    quantidade = models.IntegerField('Quantidade',default=0)
     preco = models.DecimalField('Preço', decimal_places=2, max_digits=8, default=None)
-    total = models.DecimalField('Total', decimal_places=2, max_digits=8, default=None)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField("Modificado em",auto_now_add=True)
 

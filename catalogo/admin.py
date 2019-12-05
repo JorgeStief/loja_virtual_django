@@ -10,7 +10,7 @@ class CategoriaAdmin(admin.ModelAdmin):
     list_filter = ['created', 'modified']
     
 class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug','category','created','modified']
+    list_display = ['id','name', 'slug','category','created','modified']
     search_fields = ['name','slug','category__name']
     list_filter = ['created', 'modified']
     
@@ -21,7 +21,7 @@ class ImagemAdmin(admin.ModelAdmin):
 
 
 class CarrinhoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'produto','preco','quantidade', 'total','created','modified']
+    list_display = ['id', 'user', 'produto','preco','quantidade','created','modified']
     search_fields = ['id']
     list_filter = ['created', 'modified']
         

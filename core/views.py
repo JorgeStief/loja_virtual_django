@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from catalogo.models import Categoria,Carrinho
+from catalogo.models import Categoria,Carrinho,Produto
 
 from .forms import ContatoForm, CarrinhoForm, AtualizaProdutoCarrinhoForm
 from django.core.mail import send_mail
@@ -43,61 +43,85 @@ def minhaconta(Request):
 @login_required
 def adiciona_produto_carrinho(request):
     if request.POST:
-        carrinho_form = CarrinhoForm(request.POST)
-
-        if carrinho_form.is_valid():
-            carrinho = carrinho_form.save(commit=False)
+        user = request.user
+        print(request.POST['pro_id'])
+        if user:
+            produto = Produto.objects.get(id=request.POST['pro_id'])
+    
+            carrinho = Carrinho()
+            
             carrinho.user = request.user
+            carrinho.produto = produto
+            carrinho.quantidade = 1
+            carrinho.preco = produto.price
             carrinho.save()
 
-            resultado = Carrinho.objects.all().aggregate(
-                total=Sum(F('quantidade') * F('preco'), output_field=FloatField()))
+            
+            resultado =  Carrinho.objects.filter(
+                user=user,
+            ).order_by('id')
+
+            resultado = carrinho.aggregate(
+            total=Sum(F('quantidade') * F('preco'), output_field=FloatField()))
+   
             if resultado['total']:
                 total = '{0:.2f}'.format(resultado['total'])
             else:
                 total = '0,00'
+            
 
-            lista = []
-            lista.append(carrinho)
-            lista_de_forms = []
-            lista_de_forms.append(AtualizaProdutoCarrinhoForm(initial={'quantidade': carrinho.quantidade}))
+            
+            
 
             return render(request, 'carrinho.html', {
-                'listas': zip(lista, lista_de_forms),
+                'produtos': resultado,
                 'total': total
             })
 
         else:
             raise ValueError('Ocorreu um erro inesperado ao tentar cadastrar um produto.')
     else:
-        carrinho_form = CarrinhoForm()
-    user = request.user
-    carrinho = Carrinho.objects.filter(
-        user=user,
-    ).order_by('id')
+        
+        user = request.user
+        carrinho = Carrinho.objects.filter(
+            user=user,
+        ).order_by('id')
+        
+        resultado = carrinho.aggregate(
+        total=Sum(F('quantidade') * F('preco'), output_field=FloatField()))
+        
+        if resultado['total']:
+            total = '{0:.2f}'.format(resultado['total'])
+        else:
+            total = '0,00'
 
-    resultado = carrinho.aggregate(
-    total=Sum(F('quantidade') * F('preco'), output_field=FloatField()))
+        #sub-total_list = []
+        lista_de_ids = []
+        for car in carrinho:
+            lista_de_ids.append(car.id)
+            #lista_de_forms.append(AtualizaProdutoCarrinhoForm(initial={'quantidade': car.quantidade}))
+
+        return render(request, 'carrinho.html', {
+        
+        'produtos': carrinho,
+        'lista_de_ids':zip(lista_de_ids),
+        'total': total
+    })
+
+def remove_produto_carrinho(request):
+   carrinho_id = request.POST.get('prod_id')
+   carrinho = get_object_or_404(Carrinho, id=carrinho_id)
+   carrinho.delete()
+
+   resultado = Produto.objects.all().aggregate(
+       total=Sum(F('quantidade') * F('preco'), output_field=FloatField()))
    
-    if resultado['total']:
-        total = '{0:.2f}'.format(resultado['total'])
-    else:
-        total = '0,00'
+   if resultado['total']:
+      total = '{0:.2f}'.format(resultado['total'])
+   else:
+      total = '0,00'
 
-    lista_de_ids = []
-    lista_de_forms = []
-    for car in carrinho:
-        lista_de_ids.append(car.id)
-        lista_de_forms.append(AtualizaProdutoCarrinhoForm(initial={'quantidade': car.quantidade}))
-
-    return render(request, 'carrinho.html', {
-      'form': carrinho_form,
-      'listas': zip(carrinho, lista_de_forms),
-      'lista_de_ids': lista_de_ids,
-      'total': total
-   })
-
-
+   return render(request, 'produto/valor_do_estoque.html', {'total': total})
 
 @login_required
 class CarrinhoView(View):

@@ -8,6 +8,7 @@ Contato | {{block.super}}
 {% endblock title %}
 
 {% block conteudo %}
+<div id="ajax">
 <h3 class="text-center">Meu Carrinho</h3>
                             
                     <!-- botoes e opções de cima -->
@@ -31,20 +32,21 @@ Contato | {{block.super}}
                                 <td></td> 
                                         
                             </tr>
-                            {% for carrinho, form_atualiza_produto in listas %}
+                            {% for carrinho in produtos %}
                             <tr>
-                                        
+                                 <td style="display:none">{{carrinho.id}}</td>       
                                 <td> <img src="assets/imagens/calca02.jpg" width="80px" height="80px" alt="calça"> </td>
-                                <td> {{carrinho.id__name}}</td>
+                                <td> {{carrinho.produto}}</td>
                                 <td>  {{carrinho.preco}}</td>
                                 <td> {{carrinho.quantidade}} </td>
                                 <td>  {{carrinho.total}}</td>
                                 <td> 
-                                    <form name="" method="post" action="">
-                                        <input type="hidden" name="pro_id" value="#">    
+                                    <form name="" method="post" action="{% url 'core:remove'%}" novalidate>
+                                        {% csrf_token %}
+                                        <input type="hidden" name="pro_id" value="{{carrinho.id}}">    
                                         <input type="hidden" name="acao" value="del">    
                                                 
-                                        <button class="btn btn-danger btn-sm"> Excluir </button>
+                                        <button type="button" class="btn btn-danger btn-sm remover"> Excluir </button>
                                     </form>
                                 </td>
                                         
@@ -72,7 +74,7 @@ Contato | {{block.super}}
                     <div class="row " id="total" >
                         <div class="col-md-4 text-right"></div>
                         <div class="col-md-4 text-right text-danger ">
-                            <h4>Total : R$ 10,00</h4>
+                            <h4>Total : R$ {{total}}</h4>
                         </div>
                         <!-- botão de limpar-->
                         <div class="col-md-4 ">
@@ -90,6 +92,30 @@ Contato | {{block.super}}
                                 <!-- botão finalzar -->
                     </div>
                     <br><hr>
-                </div><!-- Fim Conteudo Central-->  
+                </div><!-- Fim Conteudo Central-->
+</div>                  
 {% endblock conteudo %}
-
+{% block domready %}
+console.log("entrou")
+let lista_de_ids = {{ lista_de_ids }} 
+ $("#ajax").on("click", ".remover", function() {
+    console.log("entrou")
+    let form = $(this).parent()
+      let tr = $(form).parent().parent()
+      let ind = $(tr).index()
+      let id = lista_de_ids[ind]
+      $(form).append("<input type='hidden' name='prod_id' value='" + id + "'>")
+      let url = $(form).attr('action')
+      let formData = $(form).serializeArray()
+      console.log(lista_de_ids)
+      $.post(url, formData, function(resultado) {
+         $(tr).fadeTo('slow', 0.3, function() {
+            $(this).remove()
+            lista_de_ids.splice(ind, 1)
+            $("#total").text(resultado)
+            console.log(lista_de_ids)
+         })
+      })
+   })
+  
+{% endblock %}
