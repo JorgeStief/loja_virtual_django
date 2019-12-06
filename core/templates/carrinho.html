@@ -4,13 +4,13 @@
 {% load widget_tweaks %}
 
 {% block title %}
-Contato | {{block.super}}
+Carrinho | {{block.super}}
 {% endblock title %}
 
 {% block conteudo %}
 <div id="ajax">
 <h3 class="text-center">Meu Carrinho</h3>
-                            
+                            {{lista_de_ids}}
                     <!-- botoes e opções de cima -->
                     <div class="row float-right">
                         <div class="col-md-12  ">
@@ -43,9 +43,7 @@ Contato | {{block.super}}
                                 <td> 
                                     <form name="" method="post" action="{% url 'core:remove'%}" novalidate>
                                         {% csrf_token %}
-                                        <input type="hidden" name="pro_id" value="{{carrinho.id}}">    
-                                        <input type="hidden" name="acao" value="del">    
-                                                
+                                        <input type="hidden" name="acao" value="excluir"> 
                                         <button type="button" class="btn btn-danger btn-sm remover"> Excluir </button>
                                     </form>
                                 </td>
@@ -71,16 +69,17 @@ Contato | {{block.super}}
                     </div><br><hr>
 
                     <!-- botoes de baixo e valor total -->
-                    <div class="row " id="total" >
+                    <div class="row " >
                         <div class="col-md-4 text-right"></div>
-                        <div class="col-md-4 text-right text-danger ">
-                            <h4>Total : R$ {{total}}</h4>
+                        <div  class="col-md-3 text-right text-danger ">
+                            <span>Total: R$</span><span id="total" >{{total}}</span>
                         </div>
                         <!-- botão de limpar-->
                         <div class="col-md-4 ">
-                            <form name="limpar" method="post" action="">
+                            <form name="limpar" method="post" action="{% url 'core:remove' %}">
+                                    {% csrf_token %}
                                 <input type="hidden" name="acao" value="limpar">
-                                <input type="hidden" name="pro_id" value="1">
+                                <!--<input type="hidden" name="pro_id" value="">-->
                                 <button class="btn btn-danger btn-block"> <i class="glyphicon glyphicon-trash"></i> Limpar Tudo</button>
                                 <br>
                             </form>
@@ -96,24 +95,25 @@ Contato | {{block.super}}
 </div>                  
 {% endblock conteudo %}
 {% block domready %}
-console.log("entrou")
+
 let lista_de_ids = {{ lista_de_ids }} 
  $("#ajax").on("click", ".remover", function() {
     console.log("entrou")
     let form = $(this).parent()
       let tr = $(form).parent().parent()
       let ind = $(tr).index()
-      let id = lista_de_ids[ind]
-      $(form).append("<input type='hidden' name='prod_id' value='" + id + "'>")
+      let id = lista_de_ids[ind-1]
+      $(form).append("<input type='hidden' name='pro_id' value='" + id + "'>")
       let url = $(form).attr('action')
       let formData = $(form).serializeArray()
+      console.log(formData)
       console.log(lista_de_ids)
-      $.post(url, formData, function(resultado) {
+      $.post(url,formData, function(resultado) {
          $(tr).fadeTo('slow', 0.3, function() {
             $(this).remove()
-            lista_de_ids.splice(ind, 1)
-            $("#total").text(resultado)
-            console.log(lista_de_ids)
+            lista_de_ids.splice(ind-1, 1)
+            $("#total").text({{total}})
+            console.log(resultado)
          })
       })
    })

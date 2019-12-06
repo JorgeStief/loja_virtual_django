@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from catalogo.models import Categoria,Carrinho,Produto
-
+from django.shortcuts import get_object_or_404
 from .forms import ContatoForm, CarrinhoForm, AtualizaProdutoCarrinhoForm
 from django.core.mail import send_mail
 from django.conf import settings
@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from datetime import datetime, timedelta
 from django.db.models import Sum, F, FloatField
+from django.urls import reverse
 
 class IndexView(TemplateView):
 
@@ -57,7 +58,7 @@ def adiciona_produto_carrinho(request):
             carrinho.save()
 
             
-            resultado =  Carrinho.objects.filter(
+            carrinho =  Carrinho.objects.filter(
                 user=user,
             ).order_by('id')
 
@@ -69,12 +70,15 @@ def adiciona_produto_carrinho(request):
             else:
                 total = '0,00'
             
-
+            lista_de_ids = []
+            for car in carrinho:
+                lista_de_ids.append(car.id)
             
             
 
             return render(request, 'carrinho.html', {
-                'produtos': resultado,
+                'lista_de_ids':lista_de_ids,
+                'produtos': carrinho,
                 'total': total
             })
 
@@ -104,24 +108,36 @@ def adiciona_produto_carrinho(request):
         return render(request, 'carrinho.html', {
         
         'produtos': carrinho,
-        'lista_de_ids':zip(lista_de_ids),
+        'lista_de_ids':lista_de_ids,
         'total': total
     })
 
 def remove_produto_carrinho(request):
-   carrinho_id = request.POST.get('prod_id')
-   carrinho = get_object_or_404(Carrinho, id=carrinho_id)
-   carrinho.delete()
+    
+    total=0
+    if request.POST:
+        if request.POST.get("acao") == "limpar":
+            carrinho = Carrinho.objects.all()
+            for car in carrinho:
+                car.delete()
+        else:
 
-   resultado = Produto.objects.all().aggregate(
-       total=Sum(F('quantidade') * F('preco'), output_field=FloatField()))
-   
-   if resultado['total']:
-      total = '{0:.2f}'.format(resultado['total'])
-   else:
-      total = '0,00'
+            carrinho_id = request.POST.get('pro_id')
+            carrinho = get_object_or_404(Carrinho, id=carrinho_id)
+            carrinho.delete()
 
-   return render(request, 'produto/valor_do_estoque.html', {'total': total})
+    resultado = Carrinho.objects.filter(
+        user = request.user,
+    ).aggregate(
+    total=Sum(F('quantidade') * F('preco'), output_field=FloatField()))
+        
+    print(resultado)
+    if resultado['total']:
+        total = '{0:.2f}'.format(resultado['total'])
+    else:
+        total = '0,00'
+    print(total)
+    return redirect(reverse("core:carrinho", kwargs={'total':total}))
 
 @login_required
 class CarrinhoView(View):
