@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.conf import settings
 # Create your models here.
-
+import json
 class Categoria(models.Model):
     name = models.CharField('Nome',max_length=100, default=None)
     slug = models.SlugField('Identificador',max_length=100, default=None,unique=True)

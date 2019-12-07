@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #libs
     'widget_tweaks',
+    'mathfilters',
     #apps
     'core',
     'catalogo',

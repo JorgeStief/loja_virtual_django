@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from catalogo.models import Categoria,Carrinho,Produto
 from django.shortcuts import get_object_or_404
 from .forms import ContatoForm, CarrinhoForm, AtualizaProdutoCarrinhoForm
@@ -11,7 +11,8 @@ from django.views.decorators.http import require_POST
 from datetime import datetime, timedelta
 from django.db.models import Sum, F, FloatField
 from django.urls import reverse
-
+import json
+from rest_framework import serializers
 class IndexView(TemplateView):
 
     template_name = 'produto_lista.html'
@@ -126,18 +127,23 @@ def remove_produto_carrinho(request):
             carrinho = get_object_or_404(Carrinho, id=carrinho_id)
             carrinho.delete()
 
-    resultado = Carrinho.objects.filter(
-        user = request.user,
-    ).aggregate(
+    carrinho = Carrinho.objects.filter(
+            user=request.user,
+        ).order_by('id')        
+    
+    resultado = carrinho.aggregate(
     total=Sum(F('quantidade') * F('preco'), output_field=FloatField()))
         
-    print(resultado)
+   
     if resultado['total']:
         total = '{0:.2f}'.format(resultado['total'])
     else:
         total = '0,00'
     print(total)
-    return redirect(reverse("core:carrinho", kwargs={'total':total}))
+   
+    
+    return JsonResponse({'total':total})
+    
 
 @login_required
 class CarrinhoView(View):
@@ -154,3 +160,31 @@ class CarrinhoView(View):
         }
         return render(request,'carrinho.html',context)
 
+def modifica_produto_carrinho(request):
+    total=0
+    if request.GET:
+        
+        
+        carrinho_id = request.GET.get('pro_id')
+        quantidade = request.GET.get('quantidade ')
+        carrinho = get_object_or_404(Carrinho, id=carrinho_id)
+        carrinho.quantidade = quantidade
+        sub_total = int(quantidade) * carrinho.preco
+        carrinho.save()
+           
+
+   
+    
+    resultado = Carrinho.objects.all().aggregate(
+    total=Sum(F('quantidade') * F('preco'), output_field=FloatField())
+    )
+        
+   
+    if resultado['total']:
+        total = '{0:.2f}'.format(resultado['total'])
+    else:
+        total = '0,00'
+    print(total)
+   
+    
+    return JsonResponse({'total':total,'sub_total':sub_total, 'id':carrinho_id },)

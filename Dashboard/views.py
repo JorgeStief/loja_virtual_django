@@ -36,10 +36,10 @@ def cadastra_produto(request):
             
             
         else:
-            teste = request.FILES['jorge']
-            print(teste)
-            produto_form = ProdutoForm(request.POST, request.FILES)
-            handle_uploaded_file(request.FILES['jorge'])
+            
+            
+            produto_form = ProdutoForm(request.POST)
+            
 
         if produto_form.is_valid():
             
