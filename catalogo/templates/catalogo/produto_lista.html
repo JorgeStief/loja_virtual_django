@@ -42,7 +42,7 @@
                      <div class="row" id="pularliha">
 
                         {% for produto  in produtos  %}
-                        <div class="col-md-4">
+                        <div class="col-md-4 pb-2">
                            <div class="img-thumbnail ">
                               <a href="{{ produto.get_absolute_path }}">
                                  <img  class="rounded mx-auto d-block" src="{% if produto.main_image == '' %}{% static 'assets/imagens/produto.jpg' %} {% else %} {% static '' %}{{ produto.main_image }} {% endif %}" width="200" height="200"  alt=""> 

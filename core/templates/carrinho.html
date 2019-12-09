@@ -80,12 +80,12 @@ Carrinho | {{block.super}}
                         </div>
                         <!-- botão de limpar-->
                         <div class="col-md-4 ">
-                            <form name="limpar" method="post" action="{% url 'core:remove' %}">
+                            <form name="" method="post" action="{% url 'core:remove' %}" novalidate>
                                     {% csrf_token %}
                                 <input type="hidden" name="acao" value="limpar">
                                 
                                 <!--<input type="hidden" name="pro_id" value="">-->
-                                <button class="btn btn-danger btn-block"> <i class="glyphicon glyphicon-trash"></i> Limpar Tudo</button>
+                                <button class="btn btn-danger btn-block remover-tudo" > <i class="glyphicon glyphicon-trash"></i> Limpar Tudo</button>
                                 <br>
                             </form>
                             <form name="pedido_confirmar" id="pedido_confirmar" method="post" action="{$PAG_CONFIRMAR}">
@@ -131,6 +131,38 @@ let lista_de_ids = {{ lista_de_ids }}
                 $("#total").text(data.total)
                 //console.log(data.total)
             })
+        },
+        error: function(){
+          // alert('Deu Erro');
+          console.log('Deu Erro');
+        }
+         
+    })
+})
+
+
+
+ $("#ajax").on("click", ".remover-tudo", function() {
+    //alert("entrou")
+    let form = $(this).parent()
+    let tr = $(form).parent().parent()
+    //let ind = $(tr).index()
+    //let id = lista_de_ids[ind-1]
+    //$(form).append("<input type='hidden' name='pro_id' value='" + id + "'>")
+    let url = $(form).attr('action')
+    let formData = $(form).serializeArray()
+   //log(formData)
+    //console.log(lista_de_ids)
+    $.ajax({
+        type:'POST',
+        url:url,
+        data:formData,
+        dataType:'json',
+
+        success: function(data){
+            alert("success")
+            $("#total").text(data.total)
+           
         },
         error: function(){
           // alert('Deu Erro');
